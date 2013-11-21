@@ -14,8 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="SCAN VIN"
-        android:onClick="scanVIN" />
+        android:onClick="scanVIN"
+        android:text="SCAN VIN" />
 
     <EditText
         android:id="@+id/scannedVIN"
@@ -26,15 +26,23 @@
         android:layout_marginTop="14dp"
         android:ems="10" />
 
-    <Button
-        android:id="@+id/btnImage"
+    <ImageView
+        android:id="@+id/imageView1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/scannedVIN"
         android:layout_below="@+id/scannedVIN"
-        android:layout_marginLeft="14dp"
-        android:layout_marginTop="14dp"
-        android:text="Image" 
-        android:onClick="takePicture"/>
+        android:onClick="takePicture"
+        android:padding="10dp"
+        android:layout_height="100dp"
+        android:gravity="right|center_vertical"
+        android:src="@drawable/ic_launcher" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView1"
+        android:layout_marginTop="27dp"
+        android:text="@string/save" />
 
 </RelativeLayout>
