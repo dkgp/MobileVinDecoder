@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
@@ -44,7 +45,7 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		
 		File imageFile = getImageFile();
-		intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile));
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile)); // to get high resolution picture
 		startActivityForResult(intent, _cameraRequest);
 	}
 	
@@ -84,6 +85,10 @@ public class MainActivity extends Activity {
 		int height = image.getHeight();
 		int width = image.getWidth();
 		Log.e("handleCameraRequest", String.format("Image size ..  height:%d width:%d", height, width));
+		
+		// display image
+		ImageView imageViewer = (ImageView) findViewById(R.id.imageView1);
+		imageViewer.setImageBitmap(image);
 		
 	}
 	
