@@ -26,4 +26,15 @@
         android:layout_marginTop="14dp"
         android:ems="10" />
 
+    <Button
+        android:id="@+id/btnImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/scannedVIN"
+        android:layout_below="@+id/scannedVIN"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="14dp"
+        android:text="Image" 
+        android:onClick="takePicture"/>
+
 </RelativeLayout>
