@@ -2,25 +2,25 @@ package com.dkgp.mobilevindecoder;
 
 import java.io.File;
 
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
 	private final int _scanRequest = 0;
 	private final int _cameraRequest = 1;
+	private String _uploadedImagePath;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -107,4 +107,28 @@ public class MainActivity extends Activity {
 		
 	}
 
+	public void saveVehicle(View view) {
+		File file = getImageFile();
+		try {
+			new UploadImageTask(this).execute(file);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public String get_uploadedImagePath() {
+		return _uploadedImagePath;
+	}
+
+	public void set_uploadedImagePath(String _uploadedImagePath) {
+		this._uploadedImagePath = _uploadedImagePath;
+	}
+	
+	public void set_uploadedImageUrl(String url) {
+		EditText editText = (EditText)findViewById(R.id.uploadedImageFilePath);
+        editText.setText(url);
+	}
+	
 }
