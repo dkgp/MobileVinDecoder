@@ -9,6 +9,9 @@ import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
 import android.os.AsyncTask;
@@ -19,6 +22,7 @@ import com.google.gson.JsonParser;
 
 public class UploadImageTask extends AsyncTask<File, Object, String> {
 
+	private final int _timeout = 5000; 
 	private MainActivity _activity;
 	private String _imageUrl;
 
@@ -27,12 +31,17 @@ public class UploadImageTask extends AsyncTask<File, Object, String> {
 		_activity = mainActivity;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected String doInBackground(File... params) {
 		File imageFile = params[0];
 		try{
+			HttpParams httpParameters = new BasicHttpParams();
+			HttpConnectionParams.setConnectionTimeout(httpParameters, _timeout);
+			HttpConnectionParams.setSoTimeout(httpParameters, _timeout);
 			
-			HttpClient client = new DefaultHttpClient();
+			HttpClient client = new DefaultHttpClient(httpParameters);
+			
 		    HttpPost post = new HttpPost("https://api.dev-2.cobalt.com/inventoryAssetService/rest/v1.0/assets/upload");
 		    
 		    MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();  
@@ -67,6 +76,6 @@ public class UploadImageTask extends AsyncTask<File, Object, String> {
 		 Log.e("UploadImageTask","onPostExecute started");
          Log.e("UploadImageTask","uploaded file as " + result);
          _activity.set_uploadedImagePath(result);
-         _activity.set_uploadedImageUrl(_imageUrl);
+         _activity.set_uploadedImageUrl(_imageUrl != null ? _imageUrl : result);
      }
 }

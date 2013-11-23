@@ -22,6 +22,7 @@ public class MainActivity extends Activity {
 
 	private final int _scanRequest = 0;
 	private final int _cameraRequest = 1;
+	private final int _selectRequest = 2;
 	private String _uploadedImagePath;
 	
 	@Override
@@ -43,6 +44,13 @@ public class MainActivity extends Activity {
 		startActivityForResult(intent, 0);
 	}
 
+	public void selectPicture(View view) {
+		Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+		           android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		startActivityForResult(pickPhoto , _selectRequest);
+		
+	}
+	
 	public void takePicture(View view) {
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		
@@ -64,7 +72,12 @@ public class MainActivity extends Activity {
 			case _cameraRequest:
 				handleCameraRequest(requestCode, resultCode, data);
 				break;
-				
+			case _selectRequest:
+				Uri selectedImage = data.getData();
+				ImageView imageViewer = (ImageView) findViewById(R.id.imageView1);
+				imageViewer.setImageURI(selectedImage);
+		        
+				break;
 				default:
 					Log.e("onActivityResult", String.format("Unrecognized request code: %d", requestCode));
 			}

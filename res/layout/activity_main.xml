@@ -26,37 +26,50 @@
         android:layout_marginTop="14dp"
         android:ems="10" />
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_alignLeft="@+id/scannedVIN"
-        android:layout_below="@+id/scannedVIN"
-        android:onClick="takePicture"
-        android:padding="10dp"
-        android:layout_height="100dp"
-        android:gravity="right|center_vertical"
-        android:src="@drawable/ic_launcher" />
-
-    <EditText
-        android:id="@+id/uploadedImageFilePath"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/imageView1"
-        android:layout_alignRight="@+id/scannedVIN"
-        android:layout_centerVertical="true"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
-
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/uploadedImageFilePath"
-        android:layout_below="@+id/uploadedImageFilePath"
-        android:layout_marginTop="16dp"
+        android:layout_alignParentBottom="true"
         android:onClick="saveVehicle"
         android:text="@string/save" />
+
+    <EditText
+        android:id="@+id/uploadedImageFilePath"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button1"
+        android:layout_alignLeft="@+id/scannedVIN"
+        android:layout_alignRight="@+id/scannedVIN"
+        android:ems="10" />
+
+    <ImageButton
+        android:id="@+id/btnTakePicure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnSelectImage"
+        android:layout_below="@+id/btnSelectImage"
+        android:src="@drawable/ic_launcher" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_above="@+id/uploadedImageFilePath"
+        android:layout_alignRight="@+id/uploadedImageFilePath"
+        android:layout_marginBottom="16dp"
+        android:gravity="right|center_vertical"
+        android:padding="10dp"
+        android:src="@drawable/no_image" />
+
+    <Button
+        android:id="@+id/btnSelectImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/uploadedImageFilePath"
+        android:layout_alignTop="@+id/imageView1"
+        android:onClick="selectPicture"
+        android:text="@string/selectImage" />
 
 </RelativeLayout>
