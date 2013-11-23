@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="C:/Dev/workspaceAndroid/dkgp/MobileVinDecoder/libs/httpcore-4.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/core-2.2.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry exported="true" kind="lib" path="C:/Dev/workspaceAndroid/dkgp/MobileVinDecoder/libs/httpmime-4.3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Dev/workspaceAndroid/dkgp/MobileVinDecoder/libs/httpclient-4.3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Dev/workspaceAndroid/dkgp/MobileVinDecoder/libs/httpclient-cache-4.3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Dev/workspaceAndroid/dkgp/MobileVinDecoder/libs/gson-2.2.4.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

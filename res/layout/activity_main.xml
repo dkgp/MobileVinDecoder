@@ -37,12 +37,26 @@
         android:gravity="right|center_vertical"
         android:src="@drawable/ic_launcher" />
 
+    <EditText
+        android:id="@+id/uploadedImageFilePath"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imageView1"
+        android:layout_alignRight="@+id/scannedVIN"
+        android:layout_centerVertical="true"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView1"
-        android:layout_marginTop="27dp"
+        android:layout_alignLeft="@+id/uploadedImageFilePath"
+        android:layout_below="@+id/uploadedImageFilePath"
+        android:layout_marginTop="16dp"
+        android:onClick="saveVehicle"
         android:text="@string/save" />
 
 </RelativeLayout>
