@@ -1,4 +1,4 @@
-package com.dkgp.mobilevindecoder;
+package com.dkgp.vehicles;
 
 import java.io.File;
 

@@ -1,6 +1,8 @@
-package com.dkgp.mobilevindecoder;
+package com.dkgp.vehicles;
 
 import java.io.File;
+
+import com.dkgp.mobilevindecoder.R;
 
 import android.app.Activity;
 import android.content.Intent;
