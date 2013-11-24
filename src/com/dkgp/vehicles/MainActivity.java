@@ -17,7 +17,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-
+//test after fetch
 public class MainActivity extends Activity {
 
 	private final int _scanRequest = 0;
