@@ -44,6 +44,25 @@ public class MainActivity extends Activity {
 		startActivityForResult(intent, 0);
 	}
 
+	public void decodeVIN(View view)
+	{
+		EditText editVin = (EditText)findViewById(R.id.scannedVIN);
+		String vin = editVin.getText().toString();
+		
+		DecodeVINTask task = new DecodeVINTask();
+		Vehicle vehicle =task.decodeVIN(vin);
+		
+		EditText editMake = (EditText)findViewById(R.id.etMake);
+		editMake.setText(vehicle.getMake());
+    	
+    	EditText editModel = (EditText)findViewById(R.id.etModel);
+		editModel.setText(vehicle.getModel());
+    	
+    	EditText editYear = (EditText)findViewById(R.id.etYear);
+		editYear.setText(vehicle.getYear());
+		
+	}
+
 	public void selectPicture(View view) {
 		Intent pickPhoto = new Intent(Intent.ACTION_PICK,
 		           android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -66,8 +85,10 @@ public class MainActivity extends Activity {
 				String contents = data.getStringExtra("SCAN_RESULT");
 		        String format = data.getStringExtra("SCAN_RESULT_FORMAT");
 		        // Handle successful scan
-		        EditText editText = (EditText)findViewById(R.id.scannedVIN);
-		        editText.setText("VIN: "+contents +" format: " + format);
+		         if (format.contains("CODE_39")){
+			         EditText editText = (EditText)findViewById(R.id.scannedVIN);
+			         editText.setText(contents);
+		         }
 				break;
 			case _cameraRequest:
 				handleCameraRequest(requestCode, resultCode, data);
@@ -145,5 +166,7 @@ public class MainActivity extends Activity {
 		EditText editText = (EditText)findViewById(R.id.uploadedImageFilePath);
         editText.setText(url);
 	}
+	
+	
 	
 }
