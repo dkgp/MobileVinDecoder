@@ -57,13 +57,13 @@ public class UploadImageTask extends AsyncTask<File, Object, String> {
 		    String responseBody = EntityUtils.toString(response.getEntity());
 		    JsonParser jsonParser = new JsonParser();
 		    JsonElement ele = jsonParser.parse(responseBody);
-		    String uploadedImagePath = ele.getAsJsonObject().getAsJsonArray("uploadStatus").get(0).getAsJsonObject().get("path").getAsString();
-		    _imageUrl = ele.getAsJsonObject().get("imageServer").getAsString() + uploadedImagePath;
+		    String uploadedImageAssetId = ele.getAsJsonObject().getAsJsonArray("uploadStatus").get(0).getAsJsonObject().get("assetId").getAsString();
+		    _imageUrl = ele.getAsJsonObject().get("imageServer").getAsString() + uploadedImageAssetId;
 		    
 		    client.getConnectionManager().shutdown(); 
 			
-		    Log.e("postFile",String.format("Image uploaded successfully. File Name: %s", uploadedImagePath));
-		    return uploadedImagePath;
+		    Log.e("postFile",String.format("Image uploaded successfully. File Name: %s", uploadedImageAssetId));
+		    return uploadedImageAssetId;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -75,7 +75,7 @@ public class UploadImageTask extends AsyncTask<File, Object, String> {
 	 protected void onPostExecute(String result) {
 		 Log.e("UploadImageTask","onPostExecute started");
          Log.e("UploadImageTask","uploaded file as " + result);
-         _activity.set_uploadedImagePath(result);
+         _activity.set_uploadedImageAssetId(result);
          _activity.set_uploadedImageUrl(_imageUrl != null ? _imageUrl : result);
      }
 }

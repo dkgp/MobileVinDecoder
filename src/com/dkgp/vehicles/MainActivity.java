@@ -23,7 +23,8 @@ public class MainActivity extends Activity {
 	private final int _scanRequest = 0;
 	private final int _cameraRequest = 1;
 	private final int _selectRequest = 2;
-	private String _uploadedImagePath;
+	private String _uploadedImageAssetId;
+	private File _imageFile;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,17 +65,21 @@ public class MainActivity extends Activity {
 	}
 
 	public void selectPicture(View view) {
-		Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+		Intent intent = new Intent(Intent.ACTION_PICK,
 		           android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-		startActivityForResult(pickPhoto , _selectRequest);
+		
+//		_imageFile = getImageFile();
+//		intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(_imageFile));
+		
+		startActivityForResult(intent , _selectRequest);
 		
 	}
 	
 	public void takePicture(View view) {
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		
-		File imageFile = getImageFile();
-		intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile)); // to get high resolution picture
+		_imageFile = getImageFile();
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(_imageFile)); // to get high resolution picture
 		startActivityForResult(intent, _cameraRequest);
 	}
 	
@@ -95,6 +100,7 @@ public class MainActivity extends Activity {
 				break;
 			case _selectRequest:
 				Uri selectedImage = data.getData();
+				_imageFile = new File(selectedImage.getPath());
 				ImageView imageViewer = (ImageView) findViewById(R.id.imageView1);
 				imageViewer.setImageURI(selectedImage);
 		        
@@ -114,13 +120,13 @@ public class MainActivity extends Activity {
 			image = (Bitmap)data.getParcelableExtra("data");
 		}
 		else {
-			File imageFile = getImageFile();
-			String imageFileName = imageFile.getAbsolutePath();
+			//File imageFile = getImageFile();
+			String imageFileName = _imageFile.getAbsolutePath();
 			image = BitmapFactory.decodeFile(imageFileName);
 		}
-		int height = image.getHeight();
-		int width = image.getWidth();
-		Log.e("handleCameraRequest", String.format("Image size ..  height:%d width:%d", height, width));
+//		int height = image.getHeight();
+//		int width = image.getWidth();
+//		Log.e("handleCameraRequest", String.format("Image size ..  height:%d width:%d", height, width));
 		
 		// display image
 		ImageView imageViewer = (ImageView) findViewById(R.id.imageView1);
@@ -144,9 +150,8 @@ public class MainActivity extends Activity {
 	}
 
 	public void saveVehicle(View view) {
-		File file = getImageFile();
 		try {
-			new UploadImageTask(this).execute(file);
+			new UploadImageTask(this).execute(_imageFile);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -154,17 +159,18 @@ public class MainActivity extends Activity {
 		
 	}
 	
-	public String get_uploadedImagePath() {
-		return _uploadedImagePath;
-	}
-
-	public void set_uploadedImagePath(String _uploadedImagePath) {
-		this._uploadedImagePath = _uploadedImagePath;
-	}
+	
 	
 	public void set_uploadedImageUrl(String url) {
 		EditText editText = (EditText)findViewById(R.id.uploadedImageFilePath);
         editText.setText(url);
+	}
+	public String get_uploadedImageAssetId() {
+		return _uploadedImageAssetId;
+	}
+	public void set_uploadedImageAssetId(String uploadedImageAssetId) {
+		Log.e("set_uploadedImageAssetId", uploadedImageAssetId);
+		_uploadedImageAssetId = uploadedImageAssetId;
 	}
 	
 	
