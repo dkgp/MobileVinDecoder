@@ -23,7 +23,6 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/btnSelectImage"
         android:layout_below="@+id/btnSelectImage"
-        android:onClick="takePicture"
         android:src="@drawable/ic_launcher" />
 
     <Button

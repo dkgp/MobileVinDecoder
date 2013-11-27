@@ -2,9 +2,10 @@ package com.dkgp.vehicles;
 
 import java.io.File;
 
-import com.dkgp.mobilevindecoder.R;
-
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,22 +16,72 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.dkgp.mobilevindecoder.R;
 //test after fetch
 public class MainActivity extends Activity {
 
 	private final int _scanRequest = 0;
 	private final int _cameraRequest = 1;
 	private final int _selectRequest = 2;
+	
+	private final int _getImageDialog = 1;
+	
 	private String _uploadedImageAssetId;
 	private File _imageFile;
+	private OnClickListener getImageListener = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			showDialog(_getImageDialog);
+			
+		}
+	};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		ImageButton takePicButton = (ImageButton)findViewById(R.id.btnTakePicure);
+		takePicButton.setOnClickListener(getImageListener );
+		
 	}
+	
+	protected android.app.Dialog onCreateDialog(int id) {
+		switch(id) {
+		case _getImageDialog:
+			AlertDialog.Builder builder = new Builder(this);
+			return builder
+					.setTitle("Select source of image")
+					.setNegativeButton("Take new", new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Toast.makeText(MainActivity.this, "Taking new picture", 5).show();
+							
+						}
+					})
+					.setPositiveButton("Select existing", new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Toast.makeText(MainActivity.this, "Selecting existing picture", 5).show();
+							
+						}
+					})
+					.setIcon(R.drawable.ic_launcher)
+					.create();
+		}
+		
+		return null;
+		
+	};
  	//test after rename
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
