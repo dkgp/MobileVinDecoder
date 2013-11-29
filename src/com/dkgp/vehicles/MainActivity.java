@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
 
 	private String _uploadedImageAssetId;
 	private File _imageFile;
-	private static String url = "https://api.dev-2.cobalt.com/inventory/rest/v1.0/vehicles/detail?inventoryOwner=gmps-kindred&locale=en_us";
+	
 
 	private OnClickListener getImageListener = new OnClickListener() {
 
@@ -54,7 +54,9 @@ public class MainActivity extends Activity {
 
 		@Override
 		public void onClick(View view) {
-			new JSONParse().execute();
+			new DecoderTask(MainActivity.this).execute();
+			
+			
 
 		}
 	};
@@ -72,55 +74,6 @@ public class MainActivity extends Activity {
 
 	}
 
-	private class JSONParse extends AsyncTask<String, String, JSONObject> {
-		private ProgressDialog pDialog;
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-
-			pDialog = new ProgressDialog(MainActivity.this);
-			pDialog.setMessage("Decoding ... Please wait ...");
-			pDialog.setIndeterminate(false);
-			pDialog.setCancelable(true);
-			pDialog.show();
-
-		}
-
-		@Override
-		protected JSONObject doInBackground(String... args) {
-
-			EditText vin = (EditText) findViewById(R.id.scannedVIN);
-			String barcode = vin.getText().toString();
-//		    barcode = "1HGCM82633A004352";
-			String request = "{\"vehicles\":[{\"vehicle\":{\"vin\":\""
-					+ barcode + "\"}}]}";
-
-			JSONParser jParser = new JSONParser();
-			JSONObject json = jParser.getJSONFromUrl(url, request);
-			return json;
-		}
-
-		@Override
-		protected void onPostExecute(JSONObject json) {
-			pDialog.dismiss();
-			try {
-
-				EditText make = (EditText) findViewById(R.id.etMake);
-				EditText model = (EditText) findViewById(R.id.etModel);
-				EditText year = (EditText) findViewById(R.id.etYear);
-				JSONObject vehicle = json.getJSONArray("vehicles")
-						.getJSONObject(0).getJSONObject("vehicle");
-
-				make.setText(vehicle.getJSONObject("make").getString("label"));
-				model.setText(vehicle.getJSONObject("model").getString("label"));
-				year.setText(vehicle.getString("year"));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		}
-	}
 
 	protected android.app.Dialog onCreateDialog(int id) {
 		switch (id) {
@@ -204,7 +157,7 @@ public class MainActivity extends Activity {
 				if (format.contains("CODE_39")) {
 					EditText editText = (EditText) findViewById(R.id.scannedVIN);
 					editText.setText(contents);
-					new JSONParse().execute();
+					new DecoderTask(MainActivity.this).execute();
 
 				} else {
 					Toast.makeText(MainActivity.this,
