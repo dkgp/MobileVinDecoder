@@ -8,105 +8,189 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/uploadedImageFilePath"
-        android:layout_alignParentBottom="true"
-        android:onClick="saveVehicle"
-        android:text="@string/save" />
+        android:orientation="horizontal" >
 
-    <ImageButton
-        android:id="@+id/btnTakePicure"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/text_view_vin"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:ems="10"
+            android:text="VIN: " />
+
+        <EditText
+            android:id="@+id/scannedVIN"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/text_view_boat1"
+            android:ems="10"
+            android:onClick="scanVIN" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btnSelectImage"
-        android:layout_below="@+id/btnSelectImage"
-        android:src="@drawable/ic_launcher" />
+        android:layout_below="@+id/linearLayout1"
+        android:orientation="horizontal" >
 
-    <Button
-        android:id="@+id/btnSelectImage"
-        android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/scanVIN"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:onClick="scanVIN"
+            android:text="Scan VIN" />
+
+        <Button
+            android:id="@+id/decodeVIN"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+
+            android:layout_alignRight="@id/scannedVIN"
+            android:onClick="decodeVIN"
+            android:text="Decode" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/uploadedImageFilePath"
-        android:layout_alignTop="@+id/imageView1"
-        android:onClick="selectPicture"
-        android:text="@string/selectImage" />
+        android:layout_below="@+id/linearLayout2"
+        android:orientation="horizontal" >
+        <TextView
+            android:id="@+id/text_view_make"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:ems="10"
+            android:text="Make: " />
+        <EditText
+            android:id="@+id/etMake"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/scanVIN"
+            android:layout_toRightOf="@+id/text_view_boat2"
+            android:ems="10" />
+    </LinearLayout>
 
-    <EditText
-        android:id="@+id/uploadedImageFilePath"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button1"
-        android:layout_alignLeft="@+id/etYear"
-        android:ems="10" >
+        android:layout_below="@+id/linearLayout3"
+        android:orientation="horizontal" >
+        <TextView
+            android:id="@+id/text_view_model"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:ems="10"
+            android:text="Model: " />
+        <EditText
+            android:id="@+id/etModel"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/scanVIN"
+            android:ems="10" />
+    </LinearLayout>
 
-        <requestFocus />
-    </EditText>
-
-    <EditText
-        android:id="@+id/scannedVIN"
-        android:layout_width="210dp"
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:ems="10"
-        android:onClick="scanVIN" />
+        android:layout_below="@+id/linearLayout4"
+        android:orientation="horizontal" >
+        <TextView
+            android:id="@+id/text_view_year"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:ems="10"
+            android:text="Year: " />
+        <EditText
+            android:id="@+id/etYear"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/scanVIN"
+            android:ems="10" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/decodeVIN"
-        android:layout_width="150dp"
+    <RelativeLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/imageView1"
-        android:layout_alignRight="@id/scannedVIN"
-        android:layout_below="@+id/scannedVIN"
-        android:onClick="decodeVIN"
-        android:text="Decode" />
+        android:layout_below="@+id/linearLayout5"
+        android:orientation="horizontal" >
 
-    <Button
-        android:id="@+id/scanVIN"
-        android:layout_width="150dp"
+        <ImageButton
+            android:id="@+id/btnTakePicure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher" />
+          <Button
+            android:id="@+id/btnSelectImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="selectPicture"
+            android:layout_below="@+id/btnTakePicure"
+            android:text="@string/selectImage" />
+
+
+        <EditText
+            android:id="@+id/imageView1"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:ems="10"
+            android:padding="10dp" 
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout7"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/scannedVIN"
-        android:layout_below="@+id/scannedVIN"
-        android:layout_toLeftOf="@+id/decodeVIN"
-        android:onClick="scanVIN"
-        android:text="Scan VIN" />
+        android:layout_below="@+id/linearLayout6"
+        android:orientation="horizontal" >
 
-    <EditText
-        android:id="@+id/etMake"
-        android:layout_width="180dp"
+        <EditText
+            android:id="@+id/uploadedImageFilePath"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/button1"
+            android:layout_alignLeft="@+id/etYear"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout8"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/scanVIN"
-        android:layout_below="@+id/decodeVIN"
-        android:ems="10" />
+        android:layout_below="@+id/linearLayout7"
+        android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/etModel"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/scanVIN"
-        android:layout_below="@+id/etMake"
-        android:ems="10" />
-
-    <EditText
-        android:id="@+id/etYear"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/scanVIN"
-        android:layout_below="@+id/etModel"
-        android:ems="10" />
-
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/etYear"
-        android:gravity="right|center_vertical"
-        android:padding="10dp"
-        android:src="@drawable/no_image" />
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/uploadedImageFilePath"
+            android:layout_alignParentBottom="true"
+            android:onClick="saveVehicle"
+            android:text="@string/save" />
+    </LinearLayout>
 
 </RelativeLayout>
