@@ -29,7 +29,7 @@ import android.widget.Toast;
 
 import com.dkgp.mobilevindecoder.R;
 
-//test 001
+//test 001 - 002
 public class MainActivity extends Activity {
 
 	private final int _scanRequest = 0;
