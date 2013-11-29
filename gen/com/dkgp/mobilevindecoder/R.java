@@ -155,6 +155,8 @@ public final class R {
     }
     public static final class string {
         public static final int action_settings=0x7f0a007d;
+        public static final int api_image_upload=0x7f0a0085;
+        public static final int api_url=0x7f0a0083;
         public static final int app_name=0x7f0a0000;
         public static final int app_picker_name=0x7f0a0001;
         public static final int bookmark_picker_name=0x7f0a0002;
@@ -190,6 +192,8 @@ public final class R {
         public static final int contents_phone=0x7f0a0020;
         public static final int contents_sms=0x7f0a0021;
         public static final int contents_text=0x7f0a0022;
+        public static final int dafault_image_upload_api=0x7f0a0086;
+        public static final int default_api_url=0x7f0a0084;
         public static final int hello_world=0x7f0a007e;
         public static final int history_clear_one_history_text=0x7f0a0024;
         public static final int history_clear_text=0x7f0a0023;
@@ -198,6 +202,7 @@ public final class R {
         public static final int history_empty_detail=0x7f0a0027;
         public static final int history_send=0x7f0a0028;
         public static final int history_title=0x7f0a0029;
+        public static final int inventory_owner=0x7f0a0087;
         public static final int menu_encode_mecard=0x7f0a002a;
         public static final int menu_encode_vcard=0x7f0a002b;
         public static final int menu_help=0x7f0a002c;
@@ -218,6 +223,7 @@ public final class R {
         public static final int msg_google_shopper_missing=0x7f0a003b;
         public static final int msg_install_google_shopper=0x7f0a003c;
         public static final int msg_intent_failed=0x7f0a003d;
+        public static final int msg_picture_upload_success=0x7f0a0082;
         public static final int msg_redirect=0x7f0a003e;
         public static final int msg_sbc_book_not_searchable=0x7f0a003f;
         public static final int msg_sbc_failed=0x7f0a0040;
@@ -280,6 +286,7 @@ public final class R {
         public static final int save=0x7f0a007f;
         public static final int sbc_name=0x7f0a0079;
         public static final int selectImage=0x7f0a0080;
+        public static final int title_image_source=0x7f0a0081;
         public static final int wifi_changing_network=0x7f0a007a;
         public static final int wifi_ssid_label=0x7f0a007b;
         public static final int wifi_type_label=0x7f0a007c;
@@ -313,6 +320,7 @@ public final class R {
         public static final int AppTheme=0x7f0b0001;
     }
     public static final class xml {
-        public static final int preferences=0x7f040000;
+        public static final int main_preferences=0x7f040000;
+        public static final int preferences=0x7f040001;
     }
 }
