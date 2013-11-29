@@ -2,14 +2,18 @@ package com.dkgp.vehicles;
 
 import java.io.File;
 
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -17,6 +21,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -34,12 +39,22 @@ public class MainActivity extends Activity {
 	
 	private String _uploadedImageAssetId;
 	private File _imageFile;
+	private static String url = "https://api.dev-2.cobalt.com/inventory/rest/v1.0/vehicles/detail?inventoryOwner=gmps-kindred&locale=en_us";
+	
 	private OnClickListener getImageListener = new OnClickListener() {
 		
 		@Override
 		public void onClick(View v) {
 			showDialog(_getImageDialog);
 			
+		}
+	};
+	private OnClickListener getDecodeVINListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			new JSONParse().execute();
+
 		}
 	};
 	
@@ -50,7 +65,61 @@ public class MainActivity extends Activity {
 		
 		ImageButton takePicButton = (ImageButton)findViewById(R.id.btnTakePicure);
 		takePicButton.setOnClickListener(getImageListener );
+	
+		Button decodeVINButton = (Button) findViewById(R.id.decodeVIN);
+		decodeVINButton.setOnClickListener(getDecodeVINListener);
 		
+	}
+	
+	private class JSONParse extends AsyncTask<String, String, JSONObject> {
+		private ProgressDialog pDialog;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			pDialog = new ProgressDialog(MainActivity.this);
+			pDialog.setMessage("Calling API ...");
+			pDialog.setIndeterminate(false);
+			pDialog.setCancelable(true);
+			pDialog.show();
+
+		}
+
+		@Override
+		protected JSONObject doInBackground(String... args) {
+			
+			EditText vin = (EditText) findViewById(R.id.scannedVIN);
+			String barcode =vin.getText().toString();
+			barcode = "1HGCM82633A004352";
+			String request = "{\"vehicles\":[{\"vehicle\":{\"vin\":\"" + barcode
+					+ "\"}}]}";
+			 
+			JSONParser jParser = new JSONParser();
+			JSONObject json = jParser.getJSONFromUrl(url, request);
+			return json;
+		}
+
+		@Override
+		protected void onPostExecute(JSONObject json) {
+			pDialog.dismiss();
+			try {
+
+				EditText make = (EditText) findViewById(R.id.etMake);
+				EditText model = (EditText) findViewById(R.id.etModel);
+				EditText year = (EditText) findViewById(R.id.etYear);
+				JSONObject vehicle = json.getJSONArray("vehicles")
+						.getJSONObject(0).getJSONObject("vehicle");
+
+				make.setText(vehicle.getJSONObject("make").getString("label"));
+				model.setText(vehicle.getJSONObject("model").getString(
+						"label"));
+				year.setText(vehicle.getString("year"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
 	}
 	
 	protected android.app.Dialog onCreateDialog(int id) {
