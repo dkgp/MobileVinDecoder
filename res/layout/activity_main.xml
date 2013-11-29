@@ -35,7 +35,7 @@
             android:onClick="scanVIN" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/linearLayout2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -53,11 +53,11 @@
             android:id="@+id/decodeVIN"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-
-            android:layout_alignRight="@id/scannedVIN"
+android:layout_alignParentRight="true"
+            
             android:onClick="decodeVIN"
             android:text="Decode" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout3"

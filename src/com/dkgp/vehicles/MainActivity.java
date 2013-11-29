@@ -213,6 +213,9 @@ public class MainActivity extends Activity {
 		         if (format.contains("CODE_39")){
 			         EditText editText = (EditText)findViewById(R.id.scannedVIN);
 			         editText.setText(contents);
+		         }else
+		         {
+		        	 Toast.makeText(MainActivity.this, "Invalid VIN barcode.  Please rescan!", 8).show();
 		         }
 				break;
 			case _cameraRequest:
