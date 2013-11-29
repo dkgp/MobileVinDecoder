@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
 	private OnClickListener getImageListener = new OnClickListener() {
 
 		@Override
-		public void onClick(View v) {
+		public void onClick(View view) {
 			showDialog(_getImageDialog);
 
 		}
@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
 	private OnClickListener getDecodeVINListener = new OnClickListener() {
 
 		@Override
-		public void onClick(View v) {
+		public void onClick(View view) {
 			new JSONParse().execute();
 
 		}
@@ -80,7 +80,7 @@ public class MainActivity extends Activity {
 			super.onPreExecute();
 
 			pDialog = new ProgressDialog(MainActivity.this);
-			pDialog.setMessage("Calling API ...");
+			pDialog.setMessage("Decoding ... Please wait ...");
 			pDialog.setIndeterminate(false);
 			pDialog.setCancelable(true);
 			pDialog.show();
@@ -92,7 +92,7 @@ public class MainActivity extends Activity {
 
 			EditText vin = (EditText) findViewById(R.id.scannedVIN);
 			String barcode = vin.getText().toString();
-		    barcode = "1HGCM82633A004352";
+//		    barcode = "1HGCM82633A004352";
 			String request = "{\"vehicles\":[{\"vehicle\":{\"vin\":\""
 					+ barcode + "\"}}]}";
 
