@@ -91,7 +91,7 @@ public class MainActivity extends Activity {
 			
 			EditText vin = (EditText) findViewById(R.id.scannedVIN);
 			String barcode =vin.getText().toString();
-			barcode = "1HGCM82633A004352";
+			//barcode = "1HGCM82633A004352";
 			String request = "{\"vehicles\":[{\"vehicle\":{\"vin\":\"" + barcode
 					+ "\"}}]}";
 			 
@@ -165,24 +165,24 @@ public class MainActivity extends Activity {
 		startActivityForResult(intent, 0);
 	}
 
-	public void decodeVIN(View view)
-	{
-		EditText editVin = (EditText)findViewById(R.id.scannedVIN);
-		String vin = editVin.getText().toString();
-		
-		DecodeVINTask task = new DecodeVINTask();
-		Vehicle vehicle =task.decodeVIN(vin);
-		
-		EditText editMake = (EditText)findViewById(R.id.etMake);
-		editMake.setText(vehicle.getMake());
-    	
-    	EditText editModel = (EditText)findViewById(R.id.etModel);
-		editModel.setText(vehicle.getModel());
-    	
-    	EditText editYear = (EditText)findViewById(R.id.etYear);
-		editYear.setText(vehicle.getYear());
-		
-	}
+//	public void decodeVIN(View view)
+//	{
+//		EditText editVin = (EditText)findViewById(R.id.scannedVIN);
+//		String vin = editVin.getText().toString();
+//		
+//		DecodeVINTask task = new DecodeVINTask();
+//		Vehicle vehicle =task.decodeVIN(vin);
+//		
+//		EditText editMake = (EditText)findViewById(R.id.etMake);
+//		editMake.setText(vehicle.getMake());
+//    	
+//    	EditText editModel = (EditText)findViewById(R.id.etModel);
+//		editModel.setText(vehicle.getModel());
+//    	
+//    	EditText editYear = (EditText)findViewById(R.id.etYear);
+//		editYear.setText(vehicle.getYear());
+//		
+//	}
 
 	public void selectPicture(View view) {
 		Intent intent = new Intent(Intent.ACTION_PICK,

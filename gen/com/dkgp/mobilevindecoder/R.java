@@ -69,12 +69,12 @@ public final class R {
         public static final int contents_supplement_text_view=0x7f090020;
         public static final int contents_text_view=0x7f09001f;
         public static final int decode=0x7f090000;
-        public static final int decodeVIN=0x7f09000f;
+        public static final int decodeVIN=0x7f09000e;
         public static final int decode_failed=0x7f090001;
         public static final int decode_succeeded=0x7f090002;
         public static final int done_button=0x7f090027;
-        public static final int etMake=0x7f090011;
-        public static final int etModel=0x7f09000d;
+        public static final int etMake=0x7f090010;
+        public static final int etModel=0x7f090011;
         public static final int etYear=0x7f09000c;
         public static final int format_text_view=0x7f09001a;
         public static final int help_contents=0x7f090025;
@@ -102,8 +102,8 @@ public final class R {
         public static final int result_list_view=0x7f09002c;
         public static final int result_view=0x7f090018;
         public static final int return_scan_result=0x7f090006;
-        public static final int scanVIN=0x7f09000e;
-        public static final int scannedVIN=0x7f090010;
+        public static final int scanVIN=0x7f09000f;
+        public static final int scannedVIN=0x7f09000d;
         public static final int share_app_button=0x7f09002f;
         public static final int share_bookmark_button=0x7f090030;
         public static final int share_clipboard_button=0x7f090032;

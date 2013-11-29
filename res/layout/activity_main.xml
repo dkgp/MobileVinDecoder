@@ -35,41 +35,68 @@
         android:text="@string/selectImage" />
 
     <EditText
-        android:id="@+id/etYear"
-        android:layout_width="180dp"
+        android:id="@+id/uploadedImageFilePath"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/etModel"
-        android:layout_alignRight="@+id/etModel"
-        android:layout_below="@+id/etModel"
-        android:ems="10" />
+        android:layout_above="@+id/button1"
+        android:layout_alignLeft="@+id/etYear"
+        android:ems="10" >
 
-    <Button
-        android:id="@+id/scanVIN"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/decodeVIN"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:onClick="scanVIN"
-        android:text="SCAN VIN" />
+        <requestFocus />
+    </EditText>
 
     <EditText
         android:id="@+id/scannedVIN"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/scanVIN"
-        android:layout_alignBottom="@+id/scanVIN"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
         android:ems="10"
         android:onClick="scanVIN" />
+
+    <Button
+        android:id="@+id/decodeVIN"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imageView1"
+        android:layout_alignRight="@id/scannedVIN"
+        android:layout_below="@+id/scannedVIN"
+        android:onClick="decodeVIN"
+        android:text="Decode" />
+
+    <Button
+        android:id="@+id/scanVIN"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/scannedVIN"
+        android:layout_below="@+id/scannedVIN"
+        android:layout_toLeftOf="@+id/decodeVIN"
+        android:onClick="scanVIN"
+        android:text="Scan VIN" />
 
     <EditText
         android:id="@+id/etMake"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/scannedVIN"
-        android:layout_alignRight="@+id/scannedVIN"
-        android:layout_below="@+id/scannedVIN"
+        android:layout_alignLeft="@+id/scanVIN"
+        android:layout_below="@+id/decodeVIN"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/etModel"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/scanVIN"
+        android:layout_below="@+id/etMake"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/etYear"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/scanVIN"
+        android:layout_below="@+id/etModel"
         android:ems="10" />
 
     <ImageView
@@ -81,34 +108,5 @@
         android:gravity="right|center_vertical"
         android:padding="10dp"
         android:src="@drawable/no_image" />
-
-    <EditText
-        android:id="@+id/uploadedImageFilePath"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button1"
-        android:layout_alignLeft="@+id/etYear"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
-
-    <Button
-        android:id="@+id/decodeVIN"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/etMake"
-        android:layout_toRightOf="@+id/etMake"
-        android:onClick="decodeVIN"
-        android:text="De Code" />
-
-    <EditText
-        android:id="@+id/etModel"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/etMake"
-        android:layout_alignRight="@+id/etMake"
-        android:layout_below="@+id/etMake"
-        android:ems="10" />
 
 </RelativeLayout>
