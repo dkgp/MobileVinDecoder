@@ -6,12 +6,12 @@
     <string name="hello_world">Hello world!</string>
     <string name="save">Save</string>
     <string name="selectImage">Select Photo</string>
-	<string name="title_image_source">Select source of picture</string>
-	<string name="msg_picture_upload_success">Picture uploaded successfully.</string>
-	<string name="api_url">apiUrl</string>
-	<string name="default_api_url">https://api.dev-2.cobalt.com</string>
-	<string name="api_image_upload">apiImageUpload</string>
-	<string name="dafault_image_upload_api">/inventoryAssetService/rest/v1.0/assets/upload</string>
-	<string name="inventory_owner">inventoryOwner</string>
+    <string name="title_image_source">Select source of picture</string>
+    <string name="msg_picture_upload_success">Picture uploaded successfully.</string>
+    <string name="api_url">apiUrl</string>
+    <string name="default_api_url">https://api.dev-2.cobalt.com</string>
+    <string name="api_image_upload">apiImageUpload</string>
+    <string name="dafault_image_upload_api">/inventoryAssetService/rest/v1.0/assets/upload</string>
+    <string name="inventory_owner">inventoryOwner</string>
 
 </resources>

@@ -17,17 +17,22 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 //test 001
@@ -149,9 +154,9 @@ public class MainActivity extends Activity {
 	private void initializeImage() {
 		_imageFile = null;
 		set_uploadedImageAssetId(null);
-		ImageView imageView = (ImageView) findViewById(R.id.imageView1);
-		//imageView.setImageResource(R.drawable.no_image);
-		imageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.no_image));
+//		ImageView imageView = (ImageView) findViewById(R.id.imageView1);
+//		//imageView.setImageResource(R.drawable.no_image);
+//		imageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.no_image));
 	}
 
 	public void takePicture() {
@@ -222,11 +227,33 @@ public class MainActivity extends Activity {
 			imageFileName = _imageFile.getAbsolutePath();
 		}
 		Log.d("handleCameraRequest",String.format("Image File Name: %s", imageFileName));
+		
 		// display image
 		image = BitmapFactory.decodeFile(imageFileName);
-		ImageView imageViewer = (ImageView) findViewById(R.id.imageView1);
-		imageViewer.setImageBitmap(image);
 		
+		LinearLayout myGallery = (LinearLayout)findViewById(R.id.mygallery);
+		
+		LinearLayout layout = new LinearLayout(getApplicationContext());
+	    layout.setLayoutParams(new LayoutParams(250, 250));
+	    layout.setGravity(Gravity.CENTER);
+	     
+		ImageView imageView = new ImageView(getApplicationContext());
+	    imageView.setLayoutParams(new LayoutParams(220, 220));
+	    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+	    imageView.setImageBitmap(image);
+	     
+	    layout.addView(imageView);
+	    myGallery.addView(layout);
+	     
+	     // scroll to the right where new image is loaded
+	    final HorizontalScrollView s = 
+                 (HorizontalScrollView) findViewById(R.id.horizontalayout1);
+	    new Handler().postDelayed(new Runnable() {
+	    	    public void run() {
+	    	        s.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+	    	    }
+	    	}, 100L);
+	     
 		uploadImageToServer();
 	}
 	

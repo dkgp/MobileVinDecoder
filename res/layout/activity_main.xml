@@ -140,62 +140,25 @@
 
         <ImageButton
             android:id="@+id/btnTakePicure"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_launcher" />
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:gravity="right|center_vertical"
-            android:padding="10dp"
-            android:src="@drawable/no_image" />
-
     </RelativeLayout>
 
-    
- <HorizontalScrollView
-     	android:id="@+id/horizontalayout1"
+    <HorizontalScrollView
+        android:id="@+id/horizontalayout1"
         android:layout_width="match_parent"
-        android:layout_below="@+id/linearLayout6"
-        android:layout_height="wrap_content" >
+        android:layout_height="100dp"
+        android:layout_below="@+id/linearLayout6" >
+
         <LinearLayout
             android:id="@+id/mygallery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:gravity="right|center_vertical"
-            android:padding="10dp"
-            android:src="@drawable/no_image" />
-            <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:gravity="right|center_vertical"
-            android:padding="10dp"
-            android:src="@drawable/no_image" />
-            <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:gravity="right|center_vertical"
-            android:padding="10dp"
-            android:src="@drawable/no_image" />
+            android:orientation="horizontal" >
         </LinearLayout>
     </HorizontalScrollView>
+
     <LinearLayout
         android:id="@+id/linearLayout8"
         android:layout_width="fill_parent"
@@ -212,6 +175,5 @@
             android:onClick="saveVehicle"
             android:text="@string/save" />
     </LinearLayout>
-
 
 </RelativeLayout>

@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    <EditTextPreference android:dialogTitle="Inventory owner" android:defaultValue="gmps-kindred" android:title="Inventory owner" android:key="@string/inventory_owner" android:dialogMessage="Enter Inventory owner" /><EditTextPreference android:dialogTitle="Vehicle api server" android:defaultValue="@string/default_api_url" android:title="Vehicle api server" android:key="@string/api_url" android:dialogMessage="Enter api server url"/>
-    <EditTextPreference android:dialogTitle="Image upload api" android:defaultValue="@string/dafault_image_upload_api" android:title="Image upload api" android:key="@string/api_image_upload" android:dialogMessage="Enter image upload api"/>
-    
-    
+
+    <EditTextPreference
+        android:defaultValue="gmps-kindred"
+        android:dialogMessage="Enter Inventory owner"
+        android:dialogTitle="Inventory owner"
+        android:key="@string/inventory_owner"
+        android:title="Inventory owner" />
+    <EditTextPreference
+        android:defaultValue="@string/default_api_url"
+        android:dialogMessage="Enter api server url"
+        android:dialogTitle="Vehicle api server"
+        android:key="@string/api_url"
+        android:title="Vehicle api server" />
+    <EditTextPreference
+        android:defaultValue="@string/dafault_image_upload_api"
+        android:dialogMessage="Enter image upload api"
+        android:dialogTitle="Image upload api"
+        android:key="@string/api_image_upload"
+        android:title="Image upload api" />
 
 </PreferenceScreen>
