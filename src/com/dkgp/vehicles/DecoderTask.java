@@ -22,7 +22,7 @@ public class DecoderTask extends AsyncTask<String, String, JSONObject> {
 		super.onPreExecute();
 
 		pDialog = new ProgressDialog(_activity);
-		pDialog.setMessage("Decoding ... Please wait ...");
+		pDialog.setMessage("Decoding\nPlease wait ...");
 		pDialog.setIndeterminate(false);
 		pDialog.setCancelable(true);
 		pDialog.show();
@@ -34,7 +34,7 @@ public class DecoderTask extends AsyncTask<String, String, JSONObject> {
 
 		EditText vin = (EditText) _activity.findViewById(R.id.scannedVIN);
 		String barcode = vin.getText().toString();
-	    barcode = "1HGCM82633A004352";
+	    //barcode = "1HGCM82633A004352";
 		String request = "{\"vehicles\":[{\"vehicle\":{\"vin\":\""
 				+ barcode + "\"}}]}";
 
