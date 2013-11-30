@@ -67,7 +67,8 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 			}else{
 				Toast.makeText(_activity,"Failed to Upload.", 8).show();
 			}
-			Log.i("test", message);
+			//Log.i("test", message);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
