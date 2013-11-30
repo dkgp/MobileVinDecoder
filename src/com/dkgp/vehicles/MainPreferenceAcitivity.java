@@ -9,7 +9,7 @@ public class MainPreferenceAcitivity extends PreferenceActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//addPreferencesFromResource(R.xml.main_preferences);
+		addPreferencesFromResource(R.xml.main_preferences);
 		
 	}
 }

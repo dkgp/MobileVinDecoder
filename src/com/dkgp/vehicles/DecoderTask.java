@@ -6,8 +6,6 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.widget.EditText;
 
-import com.dkgp.mobilevindecoder.R;
-
 public class DecoderTask extends AsyncTask<String, String, JSONObject> {
 	private ProgressDialog pDialog;
 	private MainActivity _activity;

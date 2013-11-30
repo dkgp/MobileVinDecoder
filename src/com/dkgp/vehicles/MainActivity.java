@@ -3,24 +3,23 @@ package com.dkgp.vehicles;
 //test 002
 
 import java.io.File;
-
-import org.json.JSONObject;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -28,8 +27,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.dkgp.mobilevindecoder.R;
 
 //test 001
 public class MainActivity extends Activity {
@@ -43,7 +40,8 @@ public class MainActivity extends Activity {
 	private String _uploadedImageAssetId;
 	private File _imageFile;
 	
-
+	private Button saveButton;
+	
 	private OnClickListener getImageListener = new OnClickListener() {
 
 		@Override
@@ -82,50 +80,54 @@ public class MainActivity extends Activity {
 		Button uploadVehicleButton = (Button) findViewById(R.id.btnUploadVehicle);
 		uploadVehicleButton.setOnClickListener(getUploadVehicleListener);	
 
+		saveButton = (Button)findViewById(R.id.buttonSave);
 	}
 
 
 	protected android.app.Dialog onCreateDialog(int id) {
-		switch (id) {
+		switch(id) {
 		case _getImageDialog:
 			AlertDialog.Builder builder = new Builder(this);
 			return builder
-					.setTitle("Select source of image")
-					.setNegativeButton("Take new",
-							new DialogInterface.OnClickListener() {
-
-								@Override
-								public void onClick(DialogInterface dialog,
-										int which) {
-									Toast.makeText(MainActivity.this,
-											"Taking new picture", 5).show();
-
-								}
-							})
-					.setPositiveButton("Select existing",
-							new DialogInterface.OnClickListener() {
-
-								@Override
-								public void onClick(DialogInterface dialog,
-										int which) {
-									Toast.makeText(MainActivity.this,
-											"Selecting existing picture", 5)
-											.show();
-
-								}
-							}).setIcon(R.drawable.ic_launcher).create();
+					.setTitle(R.string.title_image_source)
+					.setNegativeButton("Take new", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							MainActivity.this.takePicture();
+						}
+					})
+					.setPositiveButton("Select existing", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							MainActivity.this.selectPicture();
+							
+						}
+					})
+					.setIcon(R.drawable.ic_launcher)
+					.create();
 		}
-
 		return null;
-
 	};
-
-	// test after rename
+ 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	        case R.id.action_settings:
+	        	Intent intent = new Intent(MainActivity.this, MainPreferenceAcitivity.class);
+	    		startActivity(intent);
+	            return true;
+	        
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
 	}
 
 	public void scanVIN(View view) {
@@ -134,27 +136,30 @@ public class MainActivity extends Activity {
 		startActivityForResult(intent, 0);
 	}
 
-	public void selectPicture(View view) {
+	public void selectPicture() {
 		Intent intent = new Intent(Intent.ACTION_PICK,
-				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		           android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-		// _imageFile = getImageFile();
-		// intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(_imageFile));
-
-		startActivityForResult(intent, _selectRequest);
-
+		startActivityForResult(intent , _selectRequest);
+		
+	}
+	
+	private void initializeImage() {
+		_imageFile = null;
+		set_uploadedImageAssetId(null);
+		ImageView imageView = (ImageView) findViewById(R.id.imageView1);
+		//imageView.setImageResource(R.drawable.no_image);
+		imageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.no_image));
 	}
 
-	public void takePicture(View view) {
+	public void takePicture() {
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
+		
 		_imageFile = getImageFile();
-		intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(_imageFile)); // to
-																			// get
-																			// high
-																			// resolution
-																			// picture
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(_imageFile)); // to get high resolution picture
+		
 		startActivityForResult(intent, _cameraRequest);
+		
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -176,13 +181,8 @@ public class MainActivity extends Activity {
 				}
 				break;
 			case _cameraRequest:
-				handleCameraRequest(requestCode, resultCode, data);
-				break;
 			case _selectRequest:
-				Uri selectedImage = data.getData();
-				_imageFile = new File(selectedImage.getPath());
-				ImageView imageViewer = (ImageView) findViewById(R.id.imageView1);
-				imageViewer.setImageURI(selectedImage);
+				handleCameraRequest(requestCode, resultCode, data);
 
 				break;
 			default:
@@ -196,66 +196,89 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	protected void handleCameraRequest(int requestCode, int resultCode,
-			Intent data) {
+	private String getRealPathFromURI(Uri contentURI) {
+	    Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
+	    if (cursor == null) { // Source is Dropbox or other similar local file path
+	        return contentURI.getPath();
+	    } else { 
+	        cursor.moveToFirst(); 
+	        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA); 
+	        return cursor.getString(idx); 
+	    }
+	}
+	
+	protected void handleCameraRequest(int requestCode, int resultCode, Intent data){
 		Bitmap image;
-
-		if (data != null) {
-			image = (Bitmap) data.getParcelableExtra("data");
-		} else {
-			// File imageFile = getImageFile();
-			String imageFileName = _imageFile.getAbsolutePath();
-			image = BitmapFactory.decodeFile(imageFileName);
+		String imageFileName;
+		
+		if (data != null){
+			Uri selectedImage = data.getData();
+			imageFileName = getRealPathFromURI(selectedImage);
+			_imageFile = new File(imageFileName);
 		}
-		// int height = image.getHeight();
-		// int width = image.getWidth();
-		// Log.e("handleCameraRequest",
-		// String.format("Image size ..  height:%d width:%d", height, width));
-
+		else {
+			imageFileName = _imageFile.getAbsolutePath();
+		}
+		Log.d("handleCameraRequest",String.format("Image File Name: %s", imageFileName));
 		// display image
+		image = BitmapFactory.decodeFile(imageFileName);
 		ImageView imageViewer = (ImageView) findViewById(R.id.imageView1);
 		imageViewer.setImageBitmap(image);
-
+		
+		uploadImageToServer();
 	}
-
+	
 	private File getImageFile() {
-		File targetDir = Environment
-				.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+		File targetDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 		assureThatDirectoryExist(targetDir);
 		File imageFile = new File(targetDir, "MyPicture.jpg");
-
+		
 		return imageFile;
 	}
-
+	
 	private void assureThatDirectoryExist(File directory) {
-		if (!directory.exists()) {
+		if (!directory.exists()){
 			directory.mkdirs();
 		}
+		
+	}
 
+	private void uploadImageToServer() {
+		Log.e("saveVehicle","saveVehicle start");
+		saveButton.setEnabled(false);
+		new UploadImageTask(this).execute(_imageFile);
 	}
 
 	public void saveVehicle(View view) {
 		try {
-			new UploadImageTask(this).execute(_imageFile);
-
+			// TODO:  add save code here.....
+			
+			Toast.makeText(this, "Vehicle successfully saved", 5).show();
+			initializeImage();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-	}
-
-	public void set_uploadedImageUrl(String url) {
-		EditText editText = (EditText) findViewById(R.id.uploadedImageFilePath);
-		editText.setText(url);
+		
 	}
 
 	public String get_uploadedImageAssetId() {
 		return _uploadedImageAssetId;
 	}
-
 	public void set_uploadedImageAssetId(String uploadedImageAssetId) {
 		Log.e("set_uploadedImageAssetId", uploadedImageAssetId);
 		_uploadedImageAssetId = uploadedImageAssetId;
+	}
+	
+	public void show_message(String message){
+		Toast.makeText(this, message, 5).show();
+	}
+	
+	void OnUploadImageTaskComplete(List<String> results){
+		Toast.makeText(this, results.get(0), 5).show();
+		_uploadedImageAssetId = results.get(1);
+		
+		saveButton.setEnabled(true);
 	}
 
 }

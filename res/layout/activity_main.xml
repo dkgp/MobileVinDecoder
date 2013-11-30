@@ -144,21 +144,16 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_launcher" />
 
-        <Button
-            android:id="@+id/btnSelectImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/btnTakePicure"
-            android:onClick="selectPicture"
-            android:text="@string/selectImage" />
-
-        <EditText
+        <ImageView
             android:id="@+id/imageView1"
             android:layout_width="150dp"
             android:layout_height="100dp"
             android:layout_alignParentRight="true"
-            android:ems="10"
-            android:padding="10dp" />
+            android:layout_alignParentTop="true"
+            android:gravity="right|center_vertical"
+            android:padding="10dp"
+            android:src="@drawable/no_image" />
+
     </RelativeLayout>
 
     <LinearLayout
@@ -167,17 +162,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout6"
         android:orientation="horizontal" >
-
-        <EditText
-            android:id="@+id/uploadedImageFilePath"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/button1"
-            android:layout_alignLeft="@+id/etYear"
-            android:ems="10" >
-
-            <requestFocus />
-        </EditText>
     </LinearLayout>
 
     <LinearLayout
@@ -188,8 +172,8 @@
         android:orientation="vertical" >
 
         <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
+            android:id="@+id/buttonSave"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/uploadedImageFilePath"
             android:layout_alignParentBottom="true"
