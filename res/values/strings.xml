@@ -11,7 +11,11 @@
 	<string name="api_url">apiUrl</string>
 	<string name="default_api_url">https://api.dev-2.cobalt.com</string>
 	<string name="api_image_upload">apiImageUpload</string>
-	<string name="dafault_image_upload_api">/inventoryAssetService/rest/v1.0/assets/upload</string>
+	<string name="api_vin_decode">apiVinDecode</string>
+	<string name="api_create_vehicle">apiCreateVehicle</string>
+	<string name="default_image_upload_api">/inventoryAssetService/rest/v1.0/assets/upload</string>
+	<string name="default_vin_decode_api">/inventory/rest/v1.0/vehicles/detail</string>
+	<string name="default_create_vehicle_api">/inventory/rest/v1.0/vehicles</string>
 	<string name="inventory_owner">inventoryOwner</string>
 
 </resources>

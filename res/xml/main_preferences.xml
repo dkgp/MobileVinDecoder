@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    <EditTextPreference android:dialogTitle="Inventory owner" android:defaultValue="gmps-kindred" android:title="Inventory owner" android:key="@string/inventory_owner" android:dialogMessage="Enter Inventory owner" /><EditTextPreference android:dialogTitle="Vehicle api server" android:defaultValue="@string/default_api_url" android:title="Vehicle api server" android:key="@string/api_url" android:dialogMessage="Enter api server url"/>
-    <EditTextPreference android:dialogTitle="Image upload api" android:defaultValue="@string/dafault_image_upload_api" android:title="Image upload api" android:key="@string/api_image_upload" android:dialogMessage="Enter image upload api"/>
-    
+    <EditTextPreference android:dialogTitle="Inventory owner" android:defaultValue="gmps-kindred" android:title="Inventory owner" android:key="@string/inventory_owner" android:dialogMessage="Enter Inventory owner" />
+    <EditTextPreference android:dialogTitle="Vehicle api server" android:defaultValue="@string/default_api_url" android:title="Vehicle api server" android:key="@string/api_url" android:dialogMessage="Enter api server url"/>
+    <EditTextPreference android:dialogTitle="Image upload api" android:defaultValue="@string/default_image_upload_api" android:title="Image upload api" android:key="@string/api_image_upload" android:dialogMessage="Enter image upload api"/>
+    <EditTextPreference android:dialogTitle="VIN decode api" android:defaultValue="@string/default_vin_decode_api" android:title="VIN decode api" android:key="@string/api_vin_decode" android:dialogMessage="Enter VIN decode api"/>
+    <EditTextPreference android:dialogTitle="Create vehicle api" android:defaultValue="@string/default_create_vehicle_api" android:title="Create vehicle api" android:key="@string/api_create_vehicle" android:dialogMessage="Enter create vehicle  api"/>
     
 
 </PreferenceScreen>
