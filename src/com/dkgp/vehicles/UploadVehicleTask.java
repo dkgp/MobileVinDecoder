@@ -59,7 +59,6 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 			
 			JSONObject result = json.getJSONObject("result").getJSONArray("status").getJSONObject(0);
 					
-
 			String message = result.getString("message");
 			Boolean status =message.contains("Vehicle created successfully");
 			
