@@ -4,6 +4,7 @@ package com.dkgp.vehicles;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,7 +45,9 @@ public class MainActivity extends Activity {
 
 	private final int _getImageDialog = 1;
 
-	private String _uploadedImageAssetId;
+	List<String> _uploadedImageAssetIds = new ArrayList<String>();
+	
+	//private String _uploadedImageAssetId;
 	private File _imageFile;
 	
 	private Button saveButton;
@@ -153,7 +156,7 @@ public class MainActivity extends Activity {
 	
 	private void initializeImage() {
 		_imageFile = null;
-		set_uploadedImageAssetId(null);
+		//set_uploadedImageAssetId(null);
 //		ImageView imageView = (ImageView) findViewById(R.id.imageView1);
 //		//imageView.setImageResource(R.drawable.no_image);
 //		imageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.no_image));
@@ -292,21 +295,16 @@ public class MainActivity extends Activity {
 		
 	}
 
-	public String get_uploadedImageAssetId() {
-		return _uploadedImageAssetId;
-	}
-	public void set_uploadedImageAssetId(String uploadedImageAssetId) {
-		Log.e("set_uploadedImageAssetId", uploadedImageAssetId);
-		_uploadedImageAssetId = uploadedImageAssetId;
-	}
-	
 	public void show_message(String message){
 		Toast.makeText(this, message, 5).show();
 	}
 	
 	void OnUploadImageTaskComplete(List<String> results){
 		Toast.makeText(this, results.get(0), 5).show();
-		_uploadedImageAssetId = results.get(1);
+		
+		if(results.size() > 1 && !results.get(1).isEmpty()) {
+			_uploadedImageAssetIds.add(results.get(1));
+		}
 		
 		saveButton.setEnabled(true);
 	}

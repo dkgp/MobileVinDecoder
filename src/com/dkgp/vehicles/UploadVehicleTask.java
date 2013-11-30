@@ -95,7 +95,7 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 		EditText etVin = (EditText) _activity.findViewById(R.id.scannedVIN);
 		String vin = etVin.getText().toString();
 		
-		String dealerPhotoId = _activity.get_uploadedImageAssetId();
+		String dealerPhotoId = ""; //activity.get_uploadedImageAssetId();
 
 		if(make.isEmpty() || model.isEmpty()||year.isEmpty()|| dealerPhotoId.isEmpty())
 		{
