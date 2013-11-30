@@ -56,7 +56,7 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 		pDialog.dismiss();
 		try {
 
-			Log.i("test1", json.toString());
+			
 			JSONObject result = json.getJSONObject("result").getJSONArray("status").getJSONObject(0);
 					
 
@@ -68,7 +68,7 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 			}else{
 				Toast.makeText(_activity,"Failed to Upload.", 8).show();
 			}
-			Log.i("test2", message);
+			Log.i("test", message);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
