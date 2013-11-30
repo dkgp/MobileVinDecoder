@@ -58,13 +58,13 @@ public class MainActivity extends Activity {
 		}
 	};
 	
-	private OnClickListener getUploadVehicleListener = new OnClickListener() {
-
-		@Override
-		public void onClick(View view) {
-			new UploadVehicleTask(MainActivity.this).execute();
-		}
-	};	
+//	private OnClickListener getUploadVehicleListener = new OnClickListener() {
+//
+//		@Override
+//		public void onClick(View view) {
+//			new UploadVehicleTask(MainActivity.this).execute();
+//		}
+//	};	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +77,8 @@ public class MainActivity extends Activity {
 		Button decodeVINButton = (Button) findViewById(R.id.decodeVIN);
 		decodeVINButton.setOnClickListener(getDecodeVINListener);
 		
-		Button uploadVehicleButton = (Button) findViewById(R.id.btnUploadVehicle);
-		uploadVehicleButton.setOnClickListener(getUploadVehicleListener);	
+//		Button uploadVehicleButton = (Button) findViewById(R.id.btnUploadVehicle);
+//		uploadVehicleButton.setOnClickListener(getUploadVehicleListener);	
 
 		saveButton = (Button)findViewById(R.id.buttonSave);
 	}
@@ -255,6 +255,7 @@ public class MainActivity extends Activity {
 			
 			Toast.makeText(this, "Vehicle successfully saved", 5).show();
 			initializeImage();
+			new UploadVehicleTask(MainActivity.this).execute();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
