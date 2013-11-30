@@ -55,11 +55,16 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View view) {
 			new DecoderTask(MainActivity.this).execute();
-			
-			
-
 		}
 	};
+	
+	private OnClickListener getUploadVehicleListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View view) {
+			new UploadVehicleTask(MainActivity.this).execute();
+		}
+	};	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +76,9 @@ public class MainActivity extends Activity {
 
 		Button decodeVINButton = (Button) findViewById(R.id.decodeVIN);
 		decodeVINButton.setOnClickListener(getDecodeVINListener);
+		
+		Button uploadVehicleButton = (Button) findViewById(R.id.btnUploadVehicle);
+		uploadVehicleButton.setOnClickListener(getUploadVehicleListener);	
 
 	}
 
