@@ -287,7 +287,27 @@ public class MainActivity extends Activity {
 			
 			Toast.makeText(this, "Vehicle successfully saved", 5).show();
 			initializeImage();
-			new UploadVehicleTask(MainActivity.this).execute();
+			
+			Vehicle vehicle =new Vehicle();
+			EditText etMake = (EditText) findViewById(R.id.etMake);
+			String make = etMake.getText().toString();
+			
+			EditText etModel = (EditText) findViewById(R.id.etModel);
+			String model = etModel.getText().toString();
+			
+			EditText etYear = (EditText) findViewById(R.id.etYear);
+			String year = etYear.getText().toString();
+			
+			EditText etVin = (EditText) findViewById(R.id.scannedVIN);
+			String vin = etVin.getText().toString();
+			
+			vehicle.setMake(make);
+			vehicle.setModel(model);
+			vehicle.setYear(year);
+			vehicle.setVIN(vin);
+			vehicle.setDealerPhotoIds(_uploadedImageAssetIds);
+			
+			new UploadVehicleTask(MainActivity.this,vehicle).execute();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
