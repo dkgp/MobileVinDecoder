@@ -3,6 +3,8 @@ package com.dkgp.vehicles;
 //test 002
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -231,8 +233,8 @@ public class MainActivity extends Activity {
 	private File getImageFile() {
 		File targetDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 		assureThatDirectoryExist(targetDir);
-		File imageFile = new File(targetDir, "MyPicture.jpg");
-		
+		File imageFile = new File(targetDir, new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss'.jpg'").format(new Date()));
+		Log.d("File name", imageFile.getAbsolutePath());
 		return imageFile;
 	}
 	
