@@ -138,10 +138,32 @@
         android:layout_below="@+id/linearLayout5"
         android:orientation="horizontal" >
 
+        <View
+            android:id="@+id/spacer1"
+            android:layout_width="1dp"
+            android:layout_height="5dp" >
+        </View>
+
+        <View
+            android:id="@+id/hl1"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/spacer1"
+            android:background="@android:color/darker_gray" />
+
+        <View
+            android:id="@+id/spacer2"
+            android:layout_width="1dp"
+            android:layout_height="5dp"
+            android:layout_below="@+id/hl1" >
+        </View>
+
         <ImageButton
             android:id="@+id/btnTakePicure"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/spacer2"
             android:src="@drawable/ic_launcher" />
     </RelativeLayout>
 
