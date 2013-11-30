@@ -162,9 +162,11 @@
             android:id="@+id/btnTakePicure"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
             android:layout_below="@+id/spacer2"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/spacer2"
             android:src="@drawable/ic_launcher" />
+
     </RelativeLayout>
 
     <HorizontalScrollView
