@@ -46,7 +46,7 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 		String vinuploadApi = sharedPref.getString(res.getString(R.string.api_create_vehicle), "");
 		String inventoryOwner = sharedPref.getString(res.getString(R.string.inventory_owner), "");
 		String url=apiUrl +vinuploadApi+"?inventoryOwner="+ inventoryOwner;
-		
+		Log.i("UploadVehicleTask Url",url);
 		JSONParser jParser = new JSONParser();
 		JSONObject json = jParser.getJSONFromUrl(url, payload);
 		return json;
@@ -57,7 +57,7 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 		pDialog.dismiss();
 		try {
 
-			
+			Log.i("result", json.toString());
 			JSONObject result = json.getJSONObject("result").getJSONArray("status").getJSONObject(0);
 					
 			String message = result.getString("message");
@@ -93,7 +93,7 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 		}
 		sb.deleteCharAt(sb.length()-1);
 		
-		String payload ="{\"criteria\":{\"vehicleContexts\":[{\"vehicleContext\":{\"vehicle\":{\"make\":{\"label\":\""+make+"\"},\"model\":{\"label\":\""+model+"\"},\"year\":"+year+",\"vin\":\""+ vin +"\",\"assets\":{\"dealerPhotos\":["+sb.toString()+"]}},\"modifiedFields\":[\"make.label\",\"model.label\",\"vin\",\"year\",\"assets\"]}}],\"inventoryOwner\":\"gmps-kindred\"}}";
+		String payload ="{\"criteria\":{\"vehicleContexts\":[{\"vehicleContext\":{\"vehicle\":{\"make\":{\"label\":\""+make+"\"},\"model\":{\"label\":\""+model+"\"},\"year\":"+year+",\"source\":\"M\",\"vin\":\""+ vin +"\",\"assets\":{\"dealerPhotos\":["+sb.toString()+"]}},\"modifiedFields\":[\"make.label\",\"model.label\",\"vin\",\"year\",\"assets\", \"source\"]}}],\"inventoryOwner\":\"gmps-kindred\"}}";
 		//payload ="{\"criteria\":{\"vehicleContexts\":[{\"vehicleContext\":{\"vehicle\":{\"make\":{\"label\":\"Volkswagen\"},\"model\":{\"label\":\"Jetta Sedan\"},\"year\":2009,\"vin\":\"3vwal71k99m128066\",\"assets\":{\"dealerPhotos\":[{\"id\":\"7242888004\"}]}},\"modifiedFields\":[\"make.label\",\"model.label\",\"vin\",\"year\",\"assets\"]}}],\"inventoryOwner\":\"gmps-kindred\"}}";
 		Log.i("payload", payload);
 		return payload;

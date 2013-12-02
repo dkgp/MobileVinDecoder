@@ -136,7 +136,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout5"
-        android:orientation="horizontal" >
+        android:orientation="horizontal" 
+        
+        >
 
         <View
             android:id="@+id/spacer1"
@@ -183,11 +185,12 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/linearLayout8"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/horizontalayout1"
+        android:layout_alignParentBottom="true" 
         android:orientation="vertical" >
 
         <Button
@@ -198,6 +201,6 @@
             android:layout_alignParentBottom="true"
             android:onClick="saveVehicle"
             android:text="@string/save" />
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

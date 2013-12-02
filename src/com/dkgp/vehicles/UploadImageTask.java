@@ -53,8 +53,10 @@ public class UploadImageTask extends AsyncTask<File, Object, List<String>> {
 			SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(_activity);
 			String apiUrl = sharedPref.getString(res.getString(R.string.api_url), "");
 			String uploadImageApi = sharedPref.getString(res.getString(R.string.api_image_upload), "");
-			
-		    HttpPost post = new HttpPost(apiUrl + uploadImageApi);
+			String inventoryOwner = sharedPref.getString(res.getString(R.string.inventory_owner), "");
+			String url = apiUrl + uploadImageApi +"?inventoryOwner="+inventoryOwner;
+			Log.i("UploadImageUrl",url);
+		    HttpPost post = new HttpPost(url);
 		    
 		    MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();  
 		    multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);

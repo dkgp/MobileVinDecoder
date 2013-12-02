@@ -42,6 +42,7 @@ public class DecoderTask extends AsyncTask<String, String, JSONObject> {
 
 		Resources res = _activity.getResources();
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(_activity);
+		
 		String apiUrl = sharedPref.getString(res.getString(R.string.api_url), "");
 		String vinuploadApi = sharedPref.getString(res.getString(R.string.api_vin_decode), "");
 		String inventoryOwner = sharedPref.getString(res.getString(R.string.inventory_owner), "");
