@@ -23,18 +23,13 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 	public UploadVehicleTask(MainActivity mainActivity, Vehicle vehicle) {
 		_activity = mainActivity;
 		_vehicle =vehicle;
-
 	}
 	
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
 		payload=GetPayload();
-		if (payload.length()==0){
-			
-			
-		}
-		
+				
 		pDialog = new ProgressDialog(_activity);
 		pDialog.setMessage("Uploading Vehicle Info\nPlease wait ...");
 		pDialog.setIndeterminate(false);
@@ -45,9 +40,6 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 
 	@Override
 	protected JSONObject doInBackground(String... args) {
-
-
-
 		Resources res = _activity.getResources();
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(_activity);
 		String apiUrl = sharedPref.getString(res.getString(R.string.api_url), "");
@@ -76,7 +68,7 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 			}else{
 				Toast.makeText(_activity,"Failed to Upload.", 8).show();
 			}
-			//Log.i("test", message);
+			Log.i("test", message);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -91,20 +83,19 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 		String model = _vehicle.getModel();
 		String year = _vehicle.getYear();
 		String vin = _vehicle.getVIN();
+		
 		List<String> dealerPhotoIds = _vehicle.getDealerPhotoIds();
 		
 		StringBuilder sb = new StringBuilder();
-		if(make.isEmpty() || model.isEmpty()||year.isEmpty()|| dealerPhotoIds.size()==0)
-		{
-			return "";
-		}
+
 		for (String photoId : dealerPhotoIds) {
 			sb.append("{\"id\":\""+photoId+"\"},");
 		}
 		sb.deleteCharAt(sb.length()-1);
-		String payload ="{\"criteria\":{\"vehicleContexts\":[{\"vehicleContext\":{\"vehicle\":{\"make\":{\"label\":\""+make+"\"},\"model\":{\"label\":\""+model+"\"},\"year\":"+year+",\"vin\":\""+ vin +"\",\"assets\":{\"dealerPhotos\":["+sb.toString()+"]}},\"modifiedFields\":[\"make.label\",\"model.label\",\"vin\",\"year\",\"assets\"]}}],\"inventoryOwner\":\"gmps-kindred\"}}";
-		payload ="{\"criteria\":{\"vehicleContexts\":[{\"vehicleContext\":{\"vehicle\":{\"make\":{\"label\":\"Volkswagen\"},\"model\":{\"label\":\"Jetta Sedan\"},\"year\":2009,\"vin\":\"3vwal71k99m128066\",\"assets\":{\"dealerPhotos\":[{\"id\":\"7242888004\"}]}},\"modifiedFields\":[\"make.label\",\"model.label\",\"vin\",\"year\",\"assets\"]}}],\"inventoryOwner\":\"gmps-kindred\"}}";
 		
+		String payload ="{\"criteria\":{\"vehicleContexts\":[{\"vehicleContext\":{\"vehicle\":{\"make\":{\"label\":\""+make+"\"},\"model\":{\"label\":\""+model+"\"},\"year\":"+year+",\"vin\":\""+ vin +"\",\"assets\":{\"dealerPhotos\":["+sb.toString()+"]}},\"modifiedFields\":[\"make.label\",\"model.label\",\"vin\",\"year\",\"assets\"]}}],\"inventoryOwner\":\"gmps-kindred\"}}";
+		//payload ="{\"criteria\":{\"vehicleContexts\":[{\"vehicleContext\":{\"vehicle\":{\"make\":{\"label\":\"Volkswagen\"},\"model\":{\"label\":\"Jetta Sedan\"},\"year\":2009,\"vin\":\"3vwal71k99m128066\",\"assets\":{\"dealerPhotos\":[{\"id\":\"7242888004\"}]}},\"modifiedFields\":[\"make.label\",\"model.label\",\"vin\",\"year\",\"assets\"]}}],\"inventoryOwner\":\"gmps-kindred\"}}";
+		Log.i("payload", payload);
 		return payload;
 		
 	}

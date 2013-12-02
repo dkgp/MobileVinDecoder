@@ -285,7 +285,7 @@ public class MainActivity extends Activity {
 		try {
 			// TODO:  add save code here.....
 			
-			Toast.makeText(this, "Vehicle successfully saved", 5).show();
+			//Toast.makeText(this, "Vehicle successfully saved", 5).show();
 			initializeImage();
 			
 			Vehicle vehicle =new Vehicle();
@@ -306,7 +306,11 @@ public class MainActivity extends Activity {
 			vehicle.setYear(year);
 			vehicle.setVIN(vin);
 			vehicle.setDealerPhotoIds(_uploadedImageAssetIds);
-			
+			if(make.isEmpty() || model.isEmpty()||year.isEmpty()|| _uploadedImageAssetIds.size()==0)
+			{
+				Toast.makeText(this, "Error: Vehicle Info Missing. Cannot Save!", 5).show();
+				throw new RuntimeException();
+			}
 			new UploadVehicleTask(MainActivity.this,vehicle).execute();
 			
 		} catch (Exception e) {
