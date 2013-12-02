@@ -182,7 +182,7 @@ public class MainActivity extends Activity {
 				if (format.contains("CODE_39")) {
 					EditText editText = (EditText) findViewById(R.id.scannedVIN);
 					editText.setText(contents);
-					//new DecoderTask(MainActivity.this).execute();
+					new DecoderTask(MainActivity.this).execute();
 
 				} else {
 					Toast.makeText(MainActivity.this,

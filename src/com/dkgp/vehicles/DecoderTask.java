@@ -46,7 +46,7 @@ public class DecoderTask extends AsyncTask<String, String, JSONObject> {
 		String vinuploadApi = sharedPref.getString(res.getString(R.string.api_vin_decode), "");
 		String inventoryOwner = sharedPref.getString(res.getString(R.string.inventory_owner), "");
 		String url=apiUrl +vinuploadApi+"?inventoryOwner="+inventoryOwner ;
-		Log.i("test",url);
+
 		JSONParser jParser = new JSONParser();
 		JSONObject json = jParser.getJSONFromUrl(url, request);
 		return json;

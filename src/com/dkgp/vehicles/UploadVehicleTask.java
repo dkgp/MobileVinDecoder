@@ -47,15 +47,14 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 	protected JSONObject doInBackground(String... args) {
 
 
-	    //barcode = "1HGCM82633A004352";
-//		String request = "{\"vehicles\":[{\"vehicle\":{\"vin\":\""
-//				+ barcode + "\"}}]}";
+
 		Resources res = _activity.getResources();
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(_activity);
 		String apiUrl = sharedPref.getString(res.getString(R.string.api_url), "");
 		String vinuploadApi = sharedPref.getString(res.getString(R.string.api_create_vehicle), "");
-		String url=apiUrl +"?inventoryOwner="+ vinuploadApi;
-
+		String inventoryOwner = sharedPref.getString(res.getString(R.string.inventory_owner), "");
+		String url=apiUrl +vinuploadApi+"?inventoryOwner="+ inventoryOwner;
+		
 		JSONParser jParser = new JSONParser();
 		JSONObject json = jParser.getJSONFromUrl(url, payload);
 		return json;
