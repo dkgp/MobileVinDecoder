@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.EditText;
 
 public class DecoderTask extends AsyncTask<String, String, JSONObject> {
@@ -43,7 +44,9 @@ public class DecoderTask extends AsyncTask<String, String, JSONObject> {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(_activity);
 		String apiUrl = sharedPref.getString(res.getString(R.string.api_url), "");
 		String vinuploadApi = sharedPref.getString(res.getString(R.string.api_vin_decode), "");
-		String url=apiUrl +"?inventoryOwner="+ vinuploadApi;
+		String inventoryOwner = sharedPref.getString(res.getString(R.string.inventory_owner), "");
+		String url=apiUrl +vinuploadApi+"?inventoryOwner="+inventoryOwner ;
+		Log.i("test",url);
 		JSONParser jParser = new JSONParser();
 		JSONObject json = jParser.getJSONFromUrl(url, request);
 		return json;
