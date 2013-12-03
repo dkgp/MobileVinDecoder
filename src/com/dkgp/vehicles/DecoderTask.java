@@ -48,8 +48,8 @@ public class DecoderTask extends AsyncTask<String, String, JSONObject> {
 		String inventoryOwner = sharedPref.getString(res.getString(R.string.inventory_owner), "");
 		String url=apiUrl +vinuploadApi+"?inventoryOwner="+inventoryOwner ;
 
-		JSONParser jParser = new JSONParser();
-		JSONObject json = jParser.getJSONFromUrl(url, request);
+		HttpConnection jParser = new HttpConnection();
+		JSONObject json = jParser.getJSONFromUrl(url, request, 5000);
 		return json;
 	}
 
@@ -57,16 +57,32 @@ public class DecoderTask extends AsyncTask<String, String, JSONObject> {
 	protected void onPostExecute(JSONObject json) {
 		pDialog.dismiss();
 		try {
-
-			EditText make = (EditText) _activity.findViewById(R.id.etMake);
-			EditText model = (EditText) _activity.findViewById(R.id.etModel);
-			EditText year = (EditText) _activity.findViewById(R.id.etYear);
-			JSONObject vehicle = json.getJSONArray("vehicles")
+			JSONObject jsonVehicle = json.getJSONArray("vehicles")
 					.getJSONObject(0).getJSONObject("vehicle");
+			
+			Vehicle vehicle =new Vehicle();
+			String make = jsonVehicle.getJSONObject("make").getString("label");
+			String model = jsonVehicle.getJSONObject("model").getString("label");
+			String year = jsonVehicle.getString("year");
+			String vin = jsonVehicle.getString("vin");
+			String styleId = jsonVehicle.getJSONObject("style").getString("id");
+			vehicle.setMake(make);
+			vehicle.setModel(model);
+			vehicle.setYear(year);
+			vehicle.setVIN(vin);
+			vehicle.setStyleId(styleId);
+			
+			EditText etMake = (EditText) _activity.findViewById(R.id.etMake);
+            EditText etModel = (EditText) _activity.findViewById(R.id.etModel);
+            EditText etYear = (EditText) _activity.findViewById(R.id.etYear);
+            
+            etMake.setText(make);
+            etModel.setText(model);
+            etYear.setText(year);
+            
+			_activity.OnDecoderTaskComplete(vehicle);
+			
 
-			make.setText(vehicle.getJSONObject("make").getString("label"));
-			model.setText(vehicle.getJSONObject("model").getString("label"));
-			year.setText(vehicle.getString("year"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

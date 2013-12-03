@@ -8,6 +8,7 @@ public class Vehicle {
 	private String model;
 	private String year;
 	private String vin;
+	private String styleId;
 
 
 	private List<String> dealerPhotoIds = null;
@@ -19,7 +20,13 @@ public class Vehicle {
 	public void setDealerPhotoIds(List<String> value) {
 		this.dealerPhotoIds = value;
 	}
+	public String getStyleId() {
+		return this.styleId;
+	}
 
+	public void setStyleId(String value) {
+		this.styleId = value;
+	}
 	public String getMake() {
 		return this.make;
 	}

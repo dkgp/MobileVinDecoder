@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -45,8 +47,8 @@ public class MainActivity extends Activity {
 
 	private final int _getImageDialog = 1;
 
-	List<String> _uploadedImageAssetIds = new ArrayList<String>();
-	
+	private static List<String> _uploadedImageAssetIds = new ArrayList<String>();
+	private static Vehicle _vehicle;
 	//private String _uploadedImageAssetId;
 	private File _imageFile;
 	
@@ -288,30 +290,34 @@ public class MainActivity extends Activity {
 			//Toast.makeText(this, "Vehicle successfully saved", 5).show();
 			initializeImage();
 			
-			Vehicle vehicle =new Vehicle();
-			EditText etMake = (EditText) findViewById(R.id.etMake);
-			String make = etMake.getText().toString();
+//			Vehicle vehicle =new Vehicle();
+//			EditText etMake = (EditText) findViewById(R.id.etMake);
+//			String make = etMake.getText().toString();
+//			
+//			EditText etModel = (EditText) findViewById(R.id.etModel);
+//			String model = etModel.getText().toString();
+//			
+//			EditText etYear = (EditText) findViewById(R.id.etYear);
+//			String year = etYear.getText().toString();
+//			
+//			EditText etVin = (EditText) findViewById(R.id.scannedVIN);
+//			String vin = etVin.getText().toString();
+//			
+//			vehicle.setMake(make);
+//			vehicle.setModel(model);
+//			vehicle.setYear(year);
+//			vehicle.setVIN(vin);
 			
-			EditText etModel = (EditText) findViewById(R.id.etModel);
-			String model = etModel.getText().toString();
-			
-			EditText etYear = (EditText) findViewById(R.id.etYear);
-			String year = etYear.getText().toString();
-			
-			EditText etVin = (EditText) findViewById(R.id.scannedVIN);
-			String vin = etVin.getText().toString();
-			
-			vehicle.setMake(make);
-			vehicle.setModel(model);
-			vehicle.setYear(year);
-			vehicle.setVIN(vin);
-			vehicle.setDealerPhotoIds(_uploadedImageAssetIds);
-			if(make.isEmpty() || model.isEmpty()||year.isEmpty()|| _uploadedImageAssetIds.size()==0)
+			if (_uploadedImageAssetIds.size() >0){
+				_vehicle.setDealerPhotoIds(_uploadedImageAssetIds);
+			}
+			if(_vehicle.getMake().isEmpty() || _vehicle.getModel().isEmpty()||_vehicle.getYear().isEmpty())
 			{
 				Toast.makeText(this, "Error: Vehicle Info Missing. Cannot Save!", 5).show();
 				throw new RuntimeException();
 			}
-			new UploadVehicleTask(MainActivity.this,vehicle).execute();
+			
+			new UploadVehicleTask(MainActivity.this,_vehicle).execute();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -332,5 +338,11 @@ public class MainActivity extends Activity {
 		
 		saveButton.setEnabled(true);
 	}
+	
+	void OnDecoderTaskComplete(Vehicle vehicle){
+		
+		_vehicle =vehicle;
+		
+	}	
 
 }
