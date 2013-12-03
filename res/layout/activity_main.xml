@@ -35,34 +35,12 @@
             android:onClick="scanVIN" />
     </LinearLayout>
 
-    <RelativeLayout
+
+    <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout1"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/scanVIN"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:onClick="scanVIN"
-            android:text="Scan VIN" />
-
-        <Button
-            android:id="@+id/decodeVIN"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:onClick="decodeVIN"
-            android:text="Decode" />
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout2"
         android:orientation="horizontal" >
 
         <TextView
@@ -84,10 +62,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout4"
+        android:id="@+id/linearLayout3"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout3"
+        android:layout_below="@+id/linearLayout2"
         android:orientation="horizontal" >
 
         <TextView
@@ -108,10 +86,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout5"
+        android:id="@+id/linearLayout4"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout4"
+        android:layout_below="@+id/linearLayout3"
         android:orientation="horizontal" >
 
         <TextView
@@ -130,7 +108,29 @@
             android:layout_alignLeft="@+id/scanVIN"
             android:ems="10" />
     </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout4"
+        android:orientation="horizontal" >
 
+        <Button
+            android:id="@+id/scanVIN"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:onClick="scanVIN"
+            android:text="Scan VIN" />
+
+        <Button
+            android:id="@+id/decodeVIN"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:onClick="decodeVIN"
+            android:text="Decode" />
+    </RelativeLayout>
+    
     <RelativeLayout
         android:id="@+id/linearLayout6"
         android:layout_width="fill_parent"

@@ -308,10 +308,10 @@ public class MainActivity extends Activity {
 //			vehicle.setYear(year);
 //			vehicle.setVIN(vin);
 			
-			if (_uploadedImageAssetIds.size() >0){
+			if (_uploadedImageAssetIds.size()>0){
 				_vehicle.setDealerPhotoIds(_uploadedImageAssetIds);
 			}
-			if(_vehicle.getMake().isEmpty() || _vehicle.getModel().isEmpty()||_vehicle.getYear().isEmpty())
+			if(_vehicle==null || _vehicle.getMake().isEmpty() || _vehicle.getModel().isEmpty()||_vehicle.getYear().isEmpty())
 			{
 				Toast.makeText(this, "Error: Vehicle Info Missing. Cannot Save!", 5).show();
 				throw new RuntimeException();
