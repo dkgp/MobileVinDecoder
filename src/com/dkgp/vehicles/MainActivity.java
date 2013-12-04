@@ -132,7 +132,7 @@ public class MainActivity extends Activity {
 		// Handle item selection
 		switch (item.getItemId()) {
 		case R.id.action_settings:
-			Intent intent = new Intent(MainActivity.this, MainPreferenceAcitivity.class);
+			Intent intent = new Intent(MainActivity.this, MainPreferenceActivity.class);
 			startActivity(intent);
 			return true;
 
