@@ -311,11 +311,8 @@ public class MainActivity extends Activity {
 			}
 
 			new UploadVehicleTask(MainActivity.this,_vehicle).execute();
-<<<<<<< HEAD
 
-=======
 			ClearAllFields();
->>>>>>> 5ad4d241cc2c5828336401c6540b92f8014f0ed7
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
