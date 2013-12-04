@@ -318,7 +318,7 @@ public class MainActivity extends Activity {
 			}
 			
 			new UploadVehicleTask(MainActivity.this,_vehicle).execute();
-			
+			ClearAllFields();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -344,5 +344,24 @@ public class MainActivity extends Activity {
 		_vehicle =vehicle;
 		
 	}	
+	
+	private void ClearAllFields(){
+		EditText etMake = (EditText) findViewById(R.id.etMake);
+		etMake.setText("");
+		
+		EditText etModel = (EditText) findViewById(R.id.etModel);
+		etModel.setText("");
+		
+		EditText etYear = (EditText) findViewById(R.id.etYear);
+		etYear.setText("");
+		
+		EditText etVin = (EditText) findViewById(R.id.scannedVIN);
+		etVin.setText("");
+		
+		LinearLayout gallery = (LinearLayout)findViewById(R.id.mygallery);
+		gallery.removeAllViews();
+		_vehicle=null;
+		
+	}
 
 }
