@@ -177,21 +177,40 @@
             android:layout_below="@+id/spacer2"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/spacer2" />
+
+        <View
+            android:id="@+id/hl2"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/btnTakePicure"
+            android:background="@android:color/darker_gray" />
     </RelativeLayout>
 
     <HorizontalScrollView
         android:id="@+id/horizontalayout1"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="100dp"
         android:layout_below="@+id/linearLayout6" >
 
         <LinearLayout
             android:id="@+id/mygallery"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal" >
         </LinearLayout>
     </HorizontalScrollView>
+ <View
+            android:id="@+id/spacer3"
+            android:layout_width="1dp"
+            android:layout_height="5dp"
+            android:layout_below="@+id/horizontalayout1" >
+        </View>
+    <View
+        android:id="@+id/hl3"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/spacer3"
+        android:background="@android:color/darker_gray" />
 
     <RelativeLayout
         android:id="@+id/linearLayout8"
