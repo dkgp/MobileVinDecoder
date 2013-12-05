@@ -35,7 +35,6 @@
             android:onClick="scanVIN" />
     </LinearLayout>
 
-
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="fill_parent"
@@ -58,11 +57,11 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/scanVIN"
             android:layout_toRightOf="@+id/text_view_boat2"
-            android:clickable="false" 
-        	android:cursorVisible="false" 
-        	android:focusable="false" 
-        	android:focusableInTouchMode="false"
-            android:ems="10" />
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:ems="10"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
     </LinearLayout>
 
     <LinearLayout
@@ -86,11 +85,11 @@
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/scanVIN"
-            android:clickable="false" 
-	        android:cursorVisible="false" 
-	        android:focusable="false" 
-	        android:focusableInTouchMode="false"
-            android:ems="10" />
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:ems="10"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
     </LinearLayout>
 
     <LinearLayout
@@ -114,12 +113,13 @@
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/scanVIN"
-			android:clickable="false" 
-        	android:cursorVisible="false" 
-        	android:focusable="false" 
-        	android:focusableInTouchMode="false"            
-            android:ems="10" />
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:ems="10"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
     </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/linearLayout5"
         android:layout_width="fill_parent"
@@ -142,15 +142,13 @@
             android:onClick="decodeVIN"
             android:text="Decode" />
     </RelativeLayout>
-    
+
     <RelativeLayout
         android:id="@+id/linearLayout6"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout5"
-        android:orientation="horizontal" 
-        
-        >
+        android:orientation="horizontal" >
 
         <View
             android:id="@+id/spacer1"
@@ -174,13 +172,11 @@
 
         <ImageButton
             android:id="@+id/btnTakePicure"
-            android:layout_width="40dp"
+            android:layout_width="50dp"
             android:layout_height="40dp"
             android:layout_below="@+id/spacer2"
             android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/spacer2"
-            android:src="@drawable/ic_launcher" />
-
+            android:layout_toRightOf="@+id/spacer2" />
     </RelativeLayout>
 
     <HorizontalScrollView
@@ -201,8 +197,8 @@
         android:id="@+id/linearLayout8"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_below="@+id/horizontalayout1"
-        android:layout_alignParentBottom="true" 
         android:orientation="vertical" >
 
         <Button

@@ -69,14 +69,6 @@ public class MainActivity extends Activity {
 		}
 	};
 
-	//	private OnClickListener getUploadVehicleListener = new OnClickListener() {
-	//
-	//		@Override
-	//		public void onClick(View view) {
-	//			new UploadVehicleTask(MainActivity.this).execute();
-	//		}
-	//	};	
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -84,12 +76,12 @@ public class MainActivity extends Activity {
 
 		ImageButton takePicButton = (ImageButton) findViewById(R.id.btnTakePicure);
 		takePicButton.setOnClickListener(getImageListener);
-
+		Bitmap img = BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_launcher);
+		img = Bitmap.createScaledBitmap(img, 80, 50, true);
+		takePicButton.setImageBitmap(img);
+		
 		Button decodeVINButton = (Button) findViewById(R.id.decodeVIN);
 		decodeVINButton.setOnClickListener(getDecodeVINListener);
-
-		//		Button uploadVehicleButton = (Button) findViewById(R.id.btnUploadVehicle);
-		//		uploadVehicleButton.setOnClickListener(getUploadVehicleListener);	
 
 		saveButton = (Button)findViewById(R.id.buttonSave);
 	}
