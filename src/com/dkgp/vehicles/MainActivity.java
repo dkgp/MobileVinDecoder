@@ -61,13 +61,13 @@ public class MainActivity extends Activity {
 
 		}
 	};
-	private OnClickListener getDecodeVINListener = new OnClickListener() {
-
-		@Override
-		public void onClick(View view) {
-			new DecoderTask(MainActivity.this).execute();
-		}
-	};
+//	private OnClickListener getDecodeVINListener = new OnClickListener() {
+//
+//		@Override
+//		public void onClick(View view) {
+//			new DecoderTask(MainActivity.this).execute();
+//		}
+//	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +80,8 @@ public class MainActivity extends Activity {
 		img = Bitmap.createScaledBitmap(img, 80, 50, true);
 		takePicButton.setImageBitmap(img);
 		
-		Button decodeVINButton = (Button) findViewById(R.id.decodeVIN);
-		decodeVINButton.setOnClickListener(getDecodeVINListener);
+//		Button decodeVINButton = (Button) findViewById(R.id.decodeVIN);
+//		decodeVINButton.setOnClickListener(getDecodeVINListener);
 
 		saveButton = (Button)findViewById(R.id.buttonSave);
 	}
@@ -173,9 +173,22 @@ public class MainActivity extends Activity {
 				String format = data.getStringExtra("SCAN_RESULT_FORMAT");
 				// Handle successful scan
 				if (format.contains("CODE_39")) {
+					clearAllFields();
 					EditText editText = (EditText) findViewById(R.id.scannedVIN);
 					editText.setText(contents);
-					new DecoderTask(MainActivity.this).execute();
+					Handler asyncHandler = new Handler() {
+						public void handleMessage(Message msg) {
+							super.handleMessage(msg);
+							_vehicle = (Vehicle) msg.obj;
+							
+							updateFields(_vehicle);
+
+							Toast.makeText(MainActivity.this,
+									"VIN Decoding Completed!", 5).show();
+
+						}
+					};
+					new DecoderTask(this, asyncHandler).execute(contents);
 
 				} else {
 					Toast.makeText(MainActivity.this,
@@ -291,20 +304,26 @@ public class MainActivity extends Activity {
 
 	public void saveVehicle(View view) {
 		try {
-			//initializeImage();
-
-			if (_uploadedImageAssetIds.size()>0){
-				_vehicle.setDealerPhotoIds(_uploadedImageAssetIds);
-			}
-			if(_vehicle==null || _vehicle.getMake().isEmpty() || _vehicle.getModel().isEmpty()||_vehicle.getYear().isEmpty())
-			{
-				Toast.makeText(this, "Error: Vehicle Info Missing. Cannot Save!", 5).show();
+			
+			if (_vehicle == null || _vehicle.getMake().isEmpty()
+					|| _vehicle.getModel().isEmpty()
+					|| _vehicle.getYear().isEmpty()) {
+				Toast.makeText(this,
+						"Error: Vehicle Info Missing. Cannot Save!", 5).show();
 				throw new RuntimeException();
 			}
+			
+			Handler asyncHandler = new Handler() {
+				public void handleMessage(Message msg) {
+					super.handleMessage(msg);
+					_vehicle = (Vehicle) msg.obj;
+					Toast.makeText(MainActivity.this,
+							"Vehicle Save Completed!", 10).show();
+					clearAllFields();
 
-			new UploadVehicleTask(MainActivity.this,_vehicle).execute();
-
-			ClearAllFields();
+				}
+			};
+			new UploadVehicleTask(this,asyncHandler, _vehicle).execute();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -315,29 +334,37 @@ public class MainActivity extends Activity {
 		Toast.makeText(this, message, 5).show();
 	}
 
-	void OnDecoderTaskComplete(Vehicle vehicle){
+	void updateFields(Vehicle vehicle) {
 
-		_vehicle =vehicle;
+		// _vehicle =vehicle;
+		Log.i("vehicle", "vehicle");
+		EditText etMake = (EditText) findViewById(R.id.etMake);
+		EditText etModel = (EditText) findViewById(R.id.etModel);
+		EditText etYear = (EditText) findViewById(R.id.etYear);
 
-	}	
+		etMake.setText(vehicle.getMake());
+		etModel.setText(vehicle.getModel());
+		etYear.setText(vehicle.getYear());
+
+	}
 	
-	private void ClearAllFields(){
+	private void clearAllFields() {
 		EditText etMake = (EditText) findViewById(R.id.etMake);
 		etMake.setText("");
-		
+
 		EditText etModel = (EditText) findViewById(R.id.etModel);
 		etModel.setText("");
-		
+
 		EditText etYear = (EditText) findViewById(R.id.etYear);
 		etYear.setText("");
-		
+
 		EditText etVin = (EditText) findViewById(R.id.scannedVIN);
 		etVin.setText("");
-		
-		LinearLayout gallery = (LinearLayout)findViewById(R.id.mygallery);
+
+		LinearLayout gallery = (LinearLayout) findViewById(R.id.mygallery);
 		gallery.removeAllViews();
-		_vehicle=null;
-		
+		_vehicle = null;
+
 	}
 
 }
