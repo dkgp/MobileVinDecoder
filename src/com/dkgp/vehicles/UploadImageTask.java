@@ -2,6 +2,7 @@ package com.dkgp.vehicles;
 
 import java.io.File;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,14 +11,24 @@ import android.os.Message;
 import android.util.Log;
 
 public class UploadImageTask extends AsyncTask<File, Object, String> {
-
+	private ProgressDialog pDialog;
 	private Context _context;
 	Handler _handler;
 	
-	
-	public UploadImageTask(Context c, Handler h) {
-		_context = c;
-		_handler = h; // uses observer pattern to communicate to Main Activity
+	@Override
+	protected void onPreExecute() {
+		super.onPreExecute();
+
+		pDialog = new ProgressDialog(_context);
+		pDialog.setMessage("Uploading\nPlease wait ...");
+		pDialog.setIndeterminate(false);
+		pDialog.setCancelable(true);
+		pDialog.show();
+
+	}
+	public UploadImageTask(Context context, Handler handler) {
+		_context = context;
+		_handler = handler; // uses observer pattern to communicate to Main Activity
 	}
 
 	@Override
@@ -36,6 +47,7 @@ public class UploadImageTask extends AsyncTask<File, Object, String> {
 	}
 	
 	 protected void onPostExecute(String result) {
+		 pDialog.dismiss();
 		 Log.d("UploadImageTask","onPostExecute started");
 		 Message msg = Message.obtain();
 		 Bundle bundle = new Bundle();

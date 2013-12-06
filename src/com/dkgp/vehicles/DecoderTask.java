@@ -10,16 +10,12 @@ import android.os.Message;
 
 public class DecoderTask extends AsyncTask<String, String, JSONObject> {
 	private ProgressDialog pDialog;
-	
-	// private static String url =
-	// "https://api.dev-2.cobalt.com/inventory/rest/v1.0/vehicles/detail?inventoryOwner=gmps-kindred&locale=en_us";
-
 	private Context _context;
 	private Handler _handler;
 
 	public DecoderTask(Context context, Handler handler) {
 		_context = context;
-		_handler = handler; 
+		_handler = handler;
 
 	}
 
@@ -32,7 +28,6 @@ public class DecoderTask extends AsyncTask<String, String, JSONObject> {
 		pDialog.setIndeterminate(false);
 		pDialog.setCancelable(true);
 		pDialog.show();
-
 
 	}
 
@@ -49,10 +44,10 @@ public class DecoderTask extends AsyncTask<String, String, JSONObject> {
 
 	@Override
 	protected void onPostExecute(JSONObject json) {
-		
+
 		try {
 			pDialog.dismiss();
-			
+
 			JSONObject jsonVehicle = json.getJSONArray("vehicles")
 					.getJSONObject(0).getJSONObject("vehicle");
 
@@ -75,6 +70,7 @@ public class DecoderTask extends AsyncTask<String, String, JSONObject> {
 			_handler.sendMessage(msg);
 
 		} catch (Exception e) {
+			_handler.sendMessage(null);
 			e.printStackTrace();
 		}
 

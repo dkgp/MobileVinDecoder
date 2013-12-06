@@ -13,12 +13,7 @@ import android.widget.Toast;
 
 public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 	private ProgressDialog pDialog;
-
 	private Vehicle _vehicle;
-	// private static String url =
-	// "https://api.dev-2.cobalt.com/inventory/rest/v1.0/vehicles?inventoryOwner=gmps-kindred";
-	
-
 	private Context _context;
 	private Handler _handler;
 
@@ -26,7 +21,6 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 		_context = context;
 		_handler = handler;
 		_vehicle = vehicle;
-		
 	}
 
 	@Override
@@ -38,8 +32,6 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 		pDialog.setIndeterminate(false);
 		pDialog.setCancelable(true);
 		pDialog.show();
-		
-
 	}
 
 	@Override
@@ -48,22 +40,6 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 		InventoryService inventoryService = new InventoryService(_context);
 		JSONObject json = inventoryService.uploadVehicle(_vehicle);
 		return json;
-
-		// Resources res = _context.getResources();
-		// SharedPreferences sharedPref = PreferenceManager
-		// .getDefaultSharedPreferences(_context);
-		// String apiUrl = sharedPref.getString(res.getString(R.string.api_url),
-		// "");
-		// String vinuploadApi = sharedPref.getString(
-		// res.getString(R.string.api_create_vehicle), "");
-		// String inventoryOwner = sharedPref.getString(
-		// res.getString(R.string.inventory_owner), "");
-		// String url = apiUrl + vinuploadApi + "?inventoryOwner="
-		// + inventoryOwner;
-		// Log.i("UploadVehicleTask Url", url);
-		// HttpConnection jParser = new HttpConnection();
-		// JSONObject json = jParser.getJSONFromUrl(url, payload, 5000);
-		// return json;
 	}
 
 	@Override
@@ -71,7 +47,7 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 		pDialog.dismiss();
 		try {
 
-			Log.i("result-json", "json");
+			Log.i("return-json", "json");
 			JSONObject result = json.getJSONObject("result")
 					.getJSONArray("status").getJSONObject(0);
 
@@ -91,7 +67,7 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 			msg.setData(bundle);
 			_handler.sendMessage(msg);
 
-			Log.i("test", message);
+			Log.i("return message", message);
 
 		} catch (Exception e) {
 			e.printStackTrace();

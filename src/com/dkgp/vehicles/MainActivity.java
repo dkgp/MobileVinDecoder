@@ -37,20 +37,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-//test 001
+
 public class MainActivity extends Activity {
 
 	private final int _scanRequest = 0;
 	private final int _cameraRequest = 1;
 	private final int _selectRequest = 2;
-
 	private final int _getImageDialog = 1;
 
-	private static List<String> _uploadedImageAssetIds = new ArrayList<String>();
+	private static List<String> _uploadedImageAssetIds;
 	private static Vehicle _vehicle;
-	//private String _uploadedImageAssetId;
 	private File _imageFile;
-
 	private Button saveButton;
 
 	private OnClickListener getImageListener = new OnClickListener() {
@@ -61,13 +58,6 @@ public class MainActivity extends Activity {
 
 		}
 	};
-//	private OnClickListener getDecodeVINListener = new OnClickListener() {
-//
-//		@Override
-//		public void onClick(View view) {
-//			new DecoderTask(MainActivity.this).execute();
-//		}
-//	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,9 +69,6 @@ public class MainActivity extends Activity {
 		Bitmap img = BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_launcher);
 		img = Bitmap.createScaledBitmap(img, 80, 50, true);
 		takePicButton.setImageBitmap(img);
-		
-//		Button decodeVINButton = (Button) findViewById(R.id.decodeVIN);
-//		decodeVINButton.setOnClickListener(getDecodeVINListener);
 
 		saveButton = (Button)findViewById(R.id.buttonSave);
 	}
@@ -282,14 +269,18 @@ public class MainActivity extends Activity {
 	}
 
 	private void uploadImageToServer() {
-		Log.e("saveVehicle","saveVehicle start");
+		Log.i("saveVehicle","saveVehicle start");
 		saveButton.setEnabled(false);
 		Handler asyncHandler = new Handler() {
 			public void handleMessage(Message msg){
 				super.handleMessage(msg);
 				switch (msg.what) {
 				case 1: // success
+					if (_uploadedImageAssetIds==null){
+						_uploadedImageAssetIds= new ArrayList<String>();
+					}
 					_uploadedImageAssetIds.add(msg.getData().getString("assetId"));
+
 					Toast.makeText(MainActivity.this, "Image uploaded successfully", 5).show();
 					break;
 				default:
@@ -312,7 +303,7 @@ public class MainActivity extends Activity {
 						"Error: Vehicle Info Missing. Cannot Save!", 5).show();
 				throw new RuntimeException();
 			}
-			
+			_vehicle.setDealerPhotoIds(_uploadedImageAssetIds);
 			Handler asyncHandler = new Handler() {
 				public void handleMessage(Message msg) {
 					super.handleMessage(msg);
@@ -337,7 +328,7 @@ public class MainActivity extends Activity {
 	void updateFields(Vehicle vehicle) {
 
 		// _vehicle =vehicle;
-		Log.i("vehicle", "vehicle");
+
 		EditText etMake = (EditText) findViewById(R.id.etMake);
 		EditText etModel = (EditText) findViewById(R.id.etModel);
 		EditText etYear = (EditText) findViewById(R.id.etYear);
@@ -364,7 +355,7 @@ public class MainActivity extends Activity {
 		LinearLayout gallery = (LinearLayout) findViewById(R.id.mygallery);
 		gallery.removeAllViews();
 		_vehicle = null;
-
+		_uploadedImageAssetIds =null;
 	}
-
+	
 }
