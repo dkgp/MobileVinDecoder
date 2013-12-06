@@ -9,9 +9,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 
 public class UploadImageTask extends AsyncTask<File, Object, String> {
-	private ProgressDialog pDialog;
+	private ProgressDialog dialog;
 	private Context _context;
 	Handler _handler;
 	
@@ -19,11 +20,12 @@ public class UploadImageTask extends AsyncTask<File, Object, String> {
 	protected void onPreExecute() {
 		super.onPreExecute();
 
-		pDialog = new ProgressDialog(_context);
-		pDialog.setMessage("Uploading\nPlease wait ...");
-		pDialog.setIndeterminate(false);
-		pDialog.setCancelable(true);
-		pDialog.show();
+		dialog = new ProgressDialog(_context);
+		dialog.getWindow().setGravity(Gravity.CENTER_VERTICAL);
+		dialog.setMessage("Uploading\nPlease wait ...");
+		dialog.setIndeterminate(false);
+		dialog.setCancelable(true);
+		dialog.show();
 
 	}
 	public UploadImageTask(Context context, Handler handler) {
@@ -47,7 +49,7 @@ public class UploadImageTask extends AsyncTask<File, Object, String> {
 	}
 	
 	 protected void onPostExecute(String result) {
-		 pDialog.dismiss();
+		 dialog.dismiss();
 		 Log.d("UploadImageTask","onPostExecute started");
 		 Message msg = Message.obtain();
 		 Bundle bundle = new Bundle();

@@ -7,9 +7,10 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 
 public class DecoderTask extends AsyncTask<String, String, JSONObject> {
-	private ProgressDialog pDialog;
+	private ProgressDialog dialog;
 	private Context _context;
 	private Handler _handler;
 
@@ -23,11 +24,12 @@ public class DecoderTask extends AsyncTask<String, String, JSONObject> {
 	protected void onPreExecute() {
 		super.onPreExecute();
 
-		pDialog = new ProgressDialog(_context);
-		pDialog.setMessage("Decoding\nPlease wait ...");
-		pDialog.setIndeterminate(false);
-		pDialog.setCancelable(true);
-		pDialog.show();
+		dialog = new ProgressDialog(_context);
+		dialog.getWindow().setGravity(Gravity.CENTER_VERTICAL);
+		dialog.setMessage("Decoding\nPlease wait ...");
+		dialog.setIndeterminate(false);
+		dialog.setCancelable(true);
+		dialog.show();
 
 	}
 
@@ -46,7 +48,7 @@ public class DecoderTask extends AsyncTask<String, String, JSONObject> {
 	protected void onPostExecute(JSONObject json) {
 
 		try {
-			pDialog.dismiss();
+			dialog.dismiss();
 
 			JSONObject jsonVehicle = json.getJSONArray("vehicles")
 					.getJSONObject(0).getJSONObject("vehicle");

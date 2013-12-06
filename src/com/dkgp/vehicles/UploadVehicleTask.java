@@ -9,10 +9,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.Toast;
 
 public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
-	private ProgressDialog pDialog;
+	private ProgressDialog dialog;
 	private Vehicle _vehicle;
 	private Context _context;
 	private Handler _handler;
@@ -26,12 +27,13 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-
-		pDialog = new ProgressDialog(_context);
-		pDialog.setMessage("Uploading Vehicle Info\nPlease wait ...");
-		pDialog.setIndeterminate(false);
-		pDialog.setCancelable(true);
-		pDialog.show();
+		
+		dialog = new ProgressDialog(_context);
+		dialog.getWindow().setGravity(Gravity.CENTER_VERTICAL);
+		dialog.setMessage("Uploading Vehicle Info\nPlease wait ...");
+		dialog.setIndeterminate(false);
+		dialog.setCancelable(true);
+		dialog.show();
 	}
 
 	@Override
@@ -44,7 +46,7 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 
 	@Override
 	protected void onPostExecute(JSONObject json) {
-		pDialog.dismiss();
+		dialog.dismiss();
 		try {
 
 			Log.i("return-json", "json");
