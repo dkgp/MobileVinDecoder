@@ -91,11 +91,8 @@ public class InventoryService {
 			HttpEntity httpEntity = httpResponse.getEntity();
 			inputstream = httpEntity.getContent();
 
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

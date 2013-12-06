@@ -68,9 +68,10 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 			Log.i("return message", message);
 
 		} catch (Exception e) {
+			msg.what = TaskStatus.FAIL.ordinal();
 			e.printStackTrace();
 		} finally {
-			 msg.what = TaskStatus.FAIL.ordinal();
+			 
 			_handler.sendMessage(msg);
 
 		}
