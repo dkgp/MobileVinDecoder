@@ -27,7 +27,7 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		
+
 		dialog = new ProgressDialog(_context);
 		dialog.getWindow().setGravity(Gravity.CENTER_VERTICAL);
 		dialog.setMessage("Uploading Vehicle Info\nPlease wait ...");
@@ -38,7 +38,7 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 
 	@Override
 	protected JSONObject doInBackground(String... args) {
-		
+
 		InventoryService inventoryService = new InventoryService(_context);
 		JSONObject json = inventoryService.uploadVehicle(_vehicle);
 		return json;
@@ -47,6 +47,8 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 	@Override
 	protected void onPostExecute(JSONObject json) {
 		dialog.dismiss();
+		Message msg = Message.obtain();
+		Bundle bundle = new Bundle();
 		try {
 
 			Log.i("return-json", "json");
@@ -56,23 +58,21 @@ public class UploadVehicleTask extends AsyncTask<String, String, JSONObject> {
 			String message = result.getString("message");
 			Boolean status = message.contains("Vehicle created successfully");
 
-			Message msg = Message.obtain();
-			Bundle bundle = new Bundle();
-
 			if (status == true) {
-				Toast.makeText(_context, "Successfully Uploaded.", 8).show();
 				msg.what = TaskStatus.SUCCESS.ordinal();
 			} else {
-				Toast.makeText(_context, "Failed to Upload.", 8).show();
 				msg.what = TaskStatus.FAIL.ordinal();
 			}
 			msg.setData(bundle);
-			_handler.sendMessage(msg);
 
 			Log.i("return message", message);
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			 msg.what = TaskStatus.FAIL.ordinal();
+			_handler.sendMessage(msg);
+
 		}
 
 	}

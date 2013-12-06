@@ -70,13 +70,13 @@ public class InventoryService {
 		// Making HTTP request
 		try {
 			String payload = getPayload(vehicle);
-			Log.i("payload", payload);
+			Log.d("payload", payload);
 			String vinuploadApi = _sharedPref.getString(
 					_context.getString(R.string.api_create_vehicle), "");
 			String url = _apiUrl + vinuploadApi + "?inventoryOwner="
 					+ _inventoryOwner;
 			// defaultHttpClient
-			DefaultHttpClient httpClient = new DefaultHttpClient();
+			
 			HttpPost httpPost = new HttpPost(url);
 			StringEntity params = new StringEntity(payload);
 			HttpParams httpParameters = new BasicHttpParams();
@@ -87,7 +87,7 @@ public class InventoryService {
 			httpPost.setHeader("Content-type", "application/json");
 			httpPost.setParams(httpParameters);
 			httpPost.setEntity(params);
-			HttpResponse httpResponse = httpClient.execute(httpPost);
+			HttpResponse httpResponse = _httpClient.execute(httpPost);
 			HttpEntity httpEntity = httpResponse.getEntity();
 			inputstream = httpEntity.getContent();
 
@@ -109,7 +109,7 @@ public class InventoryService {
 			}
 			inputstream.close();
 			json = sb.toString();
-			Log.i("UploadVehicleTask Url return", json);
+			Log.d("UploadVehicleTask Url return", json);
 		} catch (Exception e) {
 			Log.e("Buffer Error", "Error converting result " + e.toString());
 		}
@@ -143,7 +143,8 @@ public class InventoryService {
 			String request = "{\"vehicles\":[{\"vehicle\":{\"vin\":\"" + vin
 					+ "\"}}]}";
 
-			DefaultHttpClient httpClient = new DefaultHttpClient();
+			
+			
 			HttpPost httpPost = new HttpPost(url);
 			StringEntity params = new StringEntity(request);
 			HttpParams httpParameters = new BasicHttpParams();
@@ -154,16 +155,14 @@ public class InventoryService {
 			httpPost.setHeader("Content-type", "application/json");
 			httpPost.setParams(httpParameters);
 			httpPost.setEntity(params);
-			HttpResponse httpResponse = httpClient.execute(httpPost);
+			
+			HttpResponse httpResponse = _httpClient.execute(httpPost);
 			HttpEntity httpEntity = httpResponse.getEntity();
 			inputstream = httpEntity.getContent();
 
-		} catch (UnsupportedEncodingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+			return null;
 		}
 
 		try {
@@ -200,7 +199,7 @@ public class InventoryService {
 					_context.getString(R.string.api_image_upload), "");
 			String url = _apiUrl + uploadImageApi + "?inventoryOwner="
 					+ _inventoryOwner;
-			Log.i("UploadImageUrl", url);
+			Log.d("UploadImageUrl", url);
 
 			HttpPost post = new HttpPost(url);
 
@@ -244,7 +243,7 @@ public class InventoryService {
 		String year = vehicle.getYear();
 		String vin = vehicle.getVIN();
 		String styleid = vehicle.getStyleId();
-		Log.i("car ", make + model + year + vin + "styleid: " + styleid + " ");
+		Log.d("car ", make + model + year + vin + "styleid: " + styleid + " ");
 
 		List<String> dealerPhotoIds = vehicle.getDealerPhotoIds();
 		String photoIds = "";
@@ -257,7 +256,7 @@ public class InventoryService {
 			sb.deleteCharAt(sb.length() - 1);
 			photoIds = sb.toString();
 		}
-		Log.i("photoIds",photoIds);
+		Log.d("photoIds", photoIds);
 		String payload = "{\"criteria\":{\"vehicleContexts\":[{\"vehicleContext\":{\"vehicle\":{\"make\":{\"label\":\""
 				+ make
 				+ "\"},\"model\":{\"label\":\""
@@ -273,7 +272,7 @@ public class InventoryService {
 				+ "]}},\"modifiedFields\":[\"make.label\",\"model.label\",\"vin\",\"year\",\"assets\", \"source\"]}}],\"inventoryOwner\":\"gmps-kindred\"}}";
 		// payload
 		// ="{\"criteria\":{\"vehicleContexts\":[{\"vehicleContext\":{\"vehicle\":{\"make\":{\"label\":\"Volkswagen\"},\"model\":{\"label\":\"Jetta Sedan\"},\"year\":2009,\"vin\":\"3vwal71k99m128066\",\"assets\":{\"dealerPhotos\":[{\"id\":\"7242888004\"}]}},\"modifiedFields\":[\"make.label\",\"model.label\",\"vin\",\"year\",\"assets\"]}}],\"inventoryOwner\":\"gmps-kindred\"}}";
-		Log.i("payload", payload);
+		Log.d("payload", payload);
 
 		return payload;
 

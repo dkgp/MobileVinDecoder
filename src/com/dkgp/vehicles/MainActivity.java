@@ -37,7 +37,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-
 public class MainActivity extends Activity {
 
 	private final int _scanRequest = 0;
@@ -66,35 +65,37 @@ public class MainActivity extends Activity {
 
 		ImageButton takePicButton = (ImageButton) findViewById(R.id.btnTakePicure);
 		takePicButton.setOnClickListener(getImageListener);
-		Bitmap img = BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_launcher);
+		Bitmap img = BitmapFactory.decodeResource(this.getResources(),
+				R.drawable.ic_launcher);
 		img = Bitmap.createScaledBitmap(img, 80, 50, true);
 		takePicButton.setImageBitmap(img);
 
-		saveButton = (Button)findViewById(R.id.buttonSave);
+		saveButton = (Button) findViewById(R.id.buttonSave);
 	}
 
-
 	protected android.app.Dialog onCreateDialog(int id) {
-		switch(id) {
+		switch (id) {
 		case _getImageDialog:
 			AlertDialog.Builder builder = new Builder(this);
 			return builder
 					.setTitle(R.string.title_image_source)
-					.setNegativeButton("Take new", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							MainActivity.this.takePicture();
-						}
-					})
-					.setPositiveButton("Select existing", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							MainActivity.this.selectPicture();
+					.setNegativeButton("Take new",
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									MainActivity.this.takePicture();
+								}
+							})
+					.setPositiveButton("Select existing",
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									MainActivity.this.selectPicture();
 
-						}
-					})
-					.setIcon(R.drawable.ic_launcher)
-					.create();
+								}
+							}).setIcon(R.drawable.ic_launcher).create();
 		}
 		return null;
 	};
@@ -111,7 +112,8 @@ public class MainActivity extends Activity {
 		// Handle item selection
 		switch (item.getItemId()) {
 		case R.id.action_settings:
-			Intent intent = new Intent(MainActivity.this, MainPreferenceActivity.class);
+			Intent intent = new Intent(MainActivity.this,
+					MainPreferenceActivity.class);
 			startActivity(intent);
 			return true;
 
@@ -130,23 +132,28 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(Intent.ACTION_PICK,
 				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-		startActivityForResult(intent , _selectRequest);
+		startActivityForResult(intent, _selectRequest);
 
 	}
 
 	private void initializeImage() {
 		_imageFile = null;
-		//set_uploadedImageAssetId(null);
-		//		ImageView imageView = (ImageView) findViewById(R.id.imageView1);
-		//		//imageView.setImageResource(R.drawable.no_image);
-		//		imageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.no_image));
+		// set_uploadedImageAssetId(null);
+		// ImageView imageView = (ImageView) findViewById(R.id.imageView1);
+		// //imageView.setImageResource(R.drawable.no_image);
+		// imageView.setImageBitmap(BitmapFactory.decodeResource(getResources(),
+		// R.drawable.no_image));
 	}
 
 	public void takePicture() {
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
 		_imageFile = getImageFile();
-		intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(_imageFile)); // to get high resolution picture
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(_imageFile)); // to
+																			// get
+																			// high
+																			// resolution
+																			// picture
 
 		startActivityForResult(intent, _cameraRequest);
 
@@ -163,15 +170,23 @@ public class MainActivity extends Activity {
 					clearAllFields();
 					EditText editText = (EditText) findViewById(R.id.scannedVIN);
 					editText.setText(contents);
+
 					Handler asyncHandler = new Handler() {
 						public void handleMessage(Message msg) {
 							super.handleMessage(msg);
-							_vehicle = (Vehicle) msg.obj;
-							
-							updateFields(_vehicle);
+							if (msg.what == TaskStatus.SUCCESS.ordinal()) {
 
-							Toast.makeText(MainActivity.this,
-									"VIN Decoding Completed!", 5).show();
+								_vehicle = (Vehicle) msg.obj;
+								updateFields(_vehicle);
+								Toast.makeText(MainActivity.this,
+										"VIN Decoding Completed!", 5).show();
+							} else {
+								Toast.makeText(
+										MainActivity.this,
+										"Cannot Connect to API.\nPlease try again!",
+										10).show();
+
+							}
 
 						}
 					};
@@ -200,34 +215,38 @@ public class MainActivity extends Activity {
 	}
 
 	private String getRealPathFromURI(Uri contentURI) {
-		Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
-		if (cursor == null) { // Source is Dropbox or other similar local file path
+		Cursor cursor = getContentResolver().query(contentURI, null, null,
+				null, null);
+		if (cursor == null) { // Source is Dropbox or other similar local file
+								// path
 			return contentURI.getPath();
-		} else { 
-			cursor.moveToFirst(); 
-			int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA); 
-			return cursor.getString(idx); 
+		} else {
+			cursor.moveToFirst();
+			int idx = cursor
+					.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+			return cursor.getString(idx);
 		}
 	}
 
-	protected void handleCameraRequest(int requestCode, int resultCode, Intent data){
+	protected void handleCameraRequest(int requestCode, int resultCode,
+			Intent data) {
 		Bitmap image;
 		String imageFileName;
 
-		if (data != null){
+		if (data != null) {
 			Uri selectedImage = data.getData();
 			imageFileName = getRealPathFromURI(selectedImage);
 			_imageFile = new File(imageFileName);
-		}
-		else {
+		} else {
 			imageFileName = _imageFile.getAbsolutePath();
 		}
-		Log.d("handleCameraRequest",String.format("Image File Name: %s", imageFileName));
+		Log.d("handleCameraRequest",
+				String.format("Image File Name: %s", imageFileName));
 
 		// display image
 		image = BitmapFactory.decodeFile(imageFileName);
 
-		LinearLayout myGallery = (LinearLayout)findViewById(R.id.mygallery);
+		LinearLayout myGallery = (LinearLayout) findViewById(R.id.mygallery);
 
 		LinearLayout layout = new LinearLayout(getApplicationContext());
 		layout.setLayoutParams(new LayoutParams(250, 250));
@@ -242,8 +261,7 @@ public class MainActivity extends Activity {
 		myGallery.addView(layout);
 
 		// scroll to the right where new image is loaded
-		final HorizontalScrollView s = 
-				(HorizontalScrollView) findViewById(R.id.horizontalayout1);
+		final HorizontalScrollView s = (HorizontalScrollView) findViewById(R.id.horizontalayout1);
 		new Handler().postDelayed(new Runnable() {
 			public void run() {
 				s.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
@@ -254,37 +272,45 @@ public class MainActivity extends Activity {
 	}
 
 	private File getImageFile() {
-		File targetDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+		File targetDir = Environment
+				.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 		assureThatDirectoryExist(targetDir);
-		File imageFile = new File(targetDir, new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss'.jpg'").format(new Date()));
+		File imageFile = new File(targetDir, new SimpleDateFormat(
+				"yyyy-MM-dd-hh-mm-ss'.jpg'").format(new Date()));
 		Log.d("File name", imageFile.getAbsolutePath());
 		return imageFile;
 	}
 
 	private void assureThatDirectoryExist(File directory) {
-		if (!directory.exists()){
+		if (!directory.exists()) {
 			directory.mkdirs();
 		}
 
 	}
 
 	private void uploadImageToServer() {
-		Log.i("saveVehicle","saveVehicle start");
+		Log.i("saveVehicle", "saveVehicle start");
 		saveButton.setEnabled(false);
 		Handler asyncHandler = new Handler() {
-			public void handleMessage(Message msg){
+			public void handleMessage(Message msg) {
 				super.handleMessage(msg);
 				switch (msg.what) {
 				case 1: // success
-					if (_uploadedImageAssetIds==null){
-						_uploadedImageAssetIds= new ArrayList<String>();
+					if (_uploadedImageAssetIds == null) {
+						_uploadedImageAssetIds = new ArrayList<String>();
 					}
-					_uploadedImageAssetIds.add(msg.getData().getString("assetId"));
+					_uploadedImageAssetIds.add(msg.getData().getString(
+							"assetId"));
 
-					Toast.makeText(MainActivity.this, "Image uploaded successfully", 5).show();
+					Toast.makeText(MainActivity.this,
+							"Image uploaded successfully", 5).show();
 					break;
 				default:
-					Toast.makeText(MainActivity.this, "Error uploading image file", 5).show();
+					LinearLayout gallery = (LinearLayout) findViewById(R.id.mygallery);
+					gallery.removeAllViews();
+					
+					Toast.makeText(MainActivity.this,
+							"Error uploading image file", 5).show();
 					break;
 				}
 				saveButton.setEnabled(true);
@@ -295,7 +321,7 @@ public class MainActivity extends Activity {
 
 	public void saveVehicle(View view) {
 		try {
-			
+
 			if (_vehicle == null || _vehicle.getMake().isEmpty()
 					|| _vehicle.getModel().isEmpty()
 					|| _vehicle.getYear().isEmpty()) {
@@ -307,21 +333,27 @@ public class MainActivity extends Activity {
 			Handler asyncHandler = new Handler() {
 				public void handleMessage(Message msg) {
 					super.handleMessage(msg);
-					_vehicle = (Vehicle) msg.obj;
-					Toast.makeText(MainActivity.this,
-							"Vehicle Save Completed!", 10).show();
-					clearAllFields();
+					if (msg.what == TaskStatus.SUCCESS.ordinal()) {
+						_vehicle = (Vehicle) msg.obj;
+						Toast.makeText(MainActivity.this,
+								"Vehicle Save Completed!", 10).show();
+						clearAllFields();
+					} else {
+						Toast.makeText(MainActivity.this,
+								"Cannot Connect to API.\nPlease try again!", 10)
+								.show();
+					}
 
 				}
 			};
-			new UploadVehicleTask(this,asyncHandler, _vehicle).execute();
+			new UploadVehicleTask(this, asyncHandler, _vehicle).execute();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
 
-	public void show_message(String message){
+	public void show_message(String message) {
 		Toast.makeText(this, message, 5).show();
 	}
 
@@ -338,7 +370,7 @@ public class MainActivity extends Activity {
 		etYear.setText(vehicle.getYear());
 
 	}
-	
+
 	private void clearAllFields() {
 		EditText etMake = (EditText) findViewById(R.id.etMake);
 		etMake.setText("");
@@ -355,7 +387,7 @@ public class MainActivity extends Activity {
 		LinearLayout gallery = (LinearLayout) findViewById(R.id.mygallery);
 		gallery.removeAllViews();
 		_vehicle = null;
-		_uploadedImageAssetIds =null;
+		_uploadedImageAssetIds = null;
 	}
-	
+
 }

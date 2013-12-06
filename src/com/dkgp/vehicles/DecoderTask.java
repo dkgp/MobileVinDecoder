@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Gravity;
 
 public class DecoderTask extends AsyncTask<String, String, JSONObject> {
@@ -41,11 +42,12 @@ public class DecoderTask extends AsyncTask<String, String, JSONObject> {
 		JSONObject json = inventoryService.decodeVin(vin);
 
 		return json;
-
 	}
 
 	@Override
 	protected void onPostExecute(JSONObject json) {
+
+		Message msg = Message.obtain();
 
 		try {
 			dialog.dismiss();
@@ -65,15 +67,16 @@ public class DecoderTask extends AsyncTask<String, String, JSONObject> {
 			vehicle.setYear(year);
 			vehicle.setVIN(vin);
 			vehicle.setStyleId(styleId);
-
-			Message msg = Message.obtain();
+			msg.what = TaskStatus.SUCCESS.ordinal();
 			msg.obj = vehicle;
-
-			_handler.sendMessage(msg);
-
+			
 		} catch (Exception e) {
-			_handler.sendMessage(null);
+			
+			msg.obj = null;
+			msg.what = TaskStatus.FAIL.ordinal();
 			e.printStackTrace();
+		} finally{
+			_handler.sendMessage(msg);
 		}
 
 	}
