@@ -128,6 +128,39 @@ public class MainActivity extends Activity {
 		startActivityForResult(intent, 0);
 	}
 
+	public void decodeVIN(View view) {
+		EditText editText = (EditText) findViewById(R.id.scannedVIN);
+		String vin =editText.getText().toString();
+		int count = vin.length();
+		if (count!=17){
+			Toast.makeText(MainActivity.this,
+					"Invalid VIN!\nThe entered VIN must be 17 characters long", 5).show();
+			return;
+		}
+		
+		Handler asyncHandler = new Handler() {
+			public void handleMessage(Message msg) {
+				super.handleMessage(msg);
+				if (msg.what == TaskStatus.SUCCESS.ordinal()) {
+
+					_vehicle = (Vehicle) msg.obj;
+					updateFields(_vehicle);
+					Toast.makeText(MainActivity.this,
+							"VIN Decoding Completed!", 5).show();
+				} else {
+					Toast.makeText(
+							MainActivity.this,
+							"Cannot Connect to API.\nPlease try again!",
+							10).show();
+
+				}
+
+			}
+		};
+		new DecoderTask(this, asyncHandler).execute(vin);
+		
+
+	}
 	public void selectPicture() {
 		Intent intent = new Intent(Intent.ACTION_PICK,
 				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
