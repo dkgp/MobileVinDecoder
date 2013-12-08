@@ -136,15 +136,7 @@ public class MainActivity extends Activity {
 
 	}
 
-	private void initializeImage() {
-		_imageFile = null;
-		// set_uploadedImageAssetId(null);
-		// ImageView imageView = (ImageView) findViewById(R.id.imageView1);
-		// //imageView.setImageResource(R.drawable.no_image);
-		// imageView.setImageBitmap(BitmapFactory.decodeResource(getResources(),
-		// R.drawable.no_image));
-	}
-
+	
 	public void takePicture() {
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
